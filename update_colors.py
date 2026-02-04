@@ -39,6 +39,7 @@ html_template = f'''<!DOCTYPE html>
             right: 0;
             bottom: 0;
             background: url('Noise Seamless Vector Patterns copy.webp') repeat;
+            background-size: 100px 100px;
             opacity: 0.5;
             pointer-events: none;
             z-index: 0;
@@ -178,6 +179,33 @@ html_template = f'''<!DOCTYPE html>
             border-color: #7A5022;
         }}
 
+        .btw-toggle {{
+            display: flex;
+            background: white;
+            border: 2px solid #D4C4A8;
+            border-radius: 8px;
+            overflow: hidden;
+        }}
+
+        .btw-toggle button {{
+            padding: 12px 20px;
+            border: none;
+            background: transparent;
+            color: #5D3C1A;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }}
+
+        .btw-toggle button.active {{
+            background: #7A5022;
+            color: white;
+        }}
+
+        .btw-toggle button:hover:not(.active) {{
+            background: #F5F0E8;
+        }}
+
         .logout-btn {{
             padding: 12px 24px;
             background: #5D3C1A;
@@ -192,6 +220,12 @@ html_template = f'''<!DOCTYPE html>
         .logout-btn:hover {{
             transform: translateY(-2px);
             background: #7A5022;
+        }}
+
+        .btw-label {{
+            font-size: 12px;
+            color: #999;
+            margin-left: 5px;
         }}
 
         .stats {{
@@ -388,6 +422,11 @@ html_template = f'''<!DOCTYPE html>
                     <input type="text" id="search" placeholder="Zoek op titel, SKU of maten..." oninput="filterProducts()" />
                 </div>
 
+                <div class="btw-toggle">
+                    <button class="active" onclick="toggleBTW(true)">Incl. BTW</button>
+                    <button onclick="toggleBTW(false)">Excl. BTW</button>
+                </div>
+
                 <button class="logout-btn" onclick="logout()">Uitloggen</button>
             </div>
 
@@ -412,6 +451,8 @@ html_template = f'''<!DOCTYPE html>
 
     <script>
         const PASSWORD = 'potten01';
+        const BTW_PERCENTAGE = 0.21; // 21% BTW
+        let showInclBTW = true;
 
         // Productdata direct embedded
         const productsData = {products_js};
@@ -444,6 +485,40 @@ html_template = f'''<!DOCTYPE html>
             document.getElementById('error-message').style.display = 'none';
         }}
 
+        // BTW toggle functie
+        function toggleBTW(inclBTW) {{
+            showInclBTW = inclBTW;
+
+            // Update active state buttons
+            const buttons = document.querySelectorAll('.btw-toggle button');
+            buttons.forEach((btn, index) => {{
+                if ((index === 0 && inclBTW) || (index === 1 && !inclBTW)) {{
+                    btn.classList.add('active');
+                }} else {{
+                    btn.classList.remove('active');
+                }}
+            }});
+
+            // Re-render products met nieuwe prijzen
+            filterProducts();
+        }}
+
+        // Bereken prijs op basis van BTW setting (met 30% inkoopkorting)
+        function calculatePrice(priceString) {{
+            const price = parseFloat(priceString.replace('€', '').replace(',', '.'));
+            if (isNaN(price)) return priceString;
+
+            // Pas 30% inkoopkorting toe
+            const inkoopPrice = price * 0.7;
+
+            if (showInclBTW) {{
+                return `€${{inkoopPrice.toFixed(2)}} <span class="btw-label">(incl. BTW)</span>`;
+            }} else {{
+                const exclPrice = inkoopPrice / (1 + BTW_PERCENTAGE);
+                return `€${{exclPrice.toFixed(2)}} <span class="btw-label">(excl. BTW)</span>`;
+            }}
+        }}
+
         // Toon producten
         function displayProducts(products) {{
             const grid = document.getElementById('product-grid');
@@ -470,7 +545,7 @@ html_template = f'''<!DOCTYPE html>
                             <div class="product-title">${{product.title}}</div>
                             ${{product.sku ? `<div class="product-sku">SKU: ${{product.sku}}</div>` : ''}}
 
-                            <div class="product-price">${{product.price}}</div>
+                            <div class="product-price">${{calculatePrice(product.price)}}</div>
 
                             ${{product.dimensions ? `<div class="product-dimensions">📏 ${{product.dimensions}} cm</div>` : ''}}
 
