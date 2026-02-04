@@ -260,6 +260,7 @@ html_template = f'''<!DOCTYPE html>
             box-shadow: 0 5px 20px rgba(122, 80, 34, 0.1);
             transition: transform 0.3s, box-shadow 0.3s;
             border: 1px solid #E8DCC4;
+            position: relative;
         }}
 
         .product-card:hover {{
@@ -268,12 +269,53 @@ html_template = f'''<!DOCTYPE html>
             border-color: #7A5022;
         }}
 
-        .product-image {{
+        .product-card.reserved {{
+            opacity: 0.92;
+        }}
+
+        .product-image-container {{
+            position: relative;
             width: 100%;
             height: 250px;
+            overflow: hidden;
+        }}
+
+        .product-image {{
+            width: 100%;
+            height: 100%;
             object-fit: cover;
             cursor: pointer;
             background: #F5F0E8;
+        }}
+
+        .reserved .product-image {{
+            filter: grayscale(15%) brightness(0.95);
+        }}
+
+        .reserved-overlay {{
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+        }}
+
+        .reserved-badge {{
+            background: rgba(122, 80, 34, 0.85);
+            color: white;
+            padding: 10px 24px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+            transform: rotate(-3deg);
         }}
 
         .product-info {{
@@ -423,8 +465,8 @@ html_template = f'''<!DOCTYPE html>
                 </div>
 
                 <div class="btw-toggle">
-                    <button class="active" onclick="toggleBTW(true)">Incl. BTW</button>
-                    <button onclick="toggleBTW(false)">Excl. BTW</button>
+                    <button onclick="toggleBTW(true)">Incl. BTW</button>
+                    <button class="active" onclick="toggleBTW(false)">Excl. BTW</button>
                 </div>
 
                 <button class="logout-btn" onclick="logout()">Uitloggen</button>
@@ -452,7 +494,10 @@ html_template = f'''<!DOCTYPE html>
     <script>
         const PASSWORD = 'potten01';
         const BTW_PERCENTAGE = 0.21; // 21% BTW
-        let showInclBTW = true;
+        let showInclBTW = false; // Default: excl. BTW
+
+        // Gereserveerde producten (op basis van SKU)
+        const RESERVED_SKUS = ['CLP00006', 'CLP00007'];
 
         // Productdata direct embedded
         const productsData = {products_js};
@@ -503,13 +548,13 @@ html_template = f'''<!DOCTYPE html>
             filterProducts();
         }}
 
-        // Bereken prijs op basis van BTW setting (met 30% inkoopkorting)
+        // Bereken prijs op basis van BTW setting (met 20% inkoopkorting)
         function calculatePrice(priceString) {{
             const price = parseFloat(priceString.replace('€', '').replace(',', '.'));
             if (isNaN(price)) return priceString;
 
-            // Pas 30% inkoopkorting toe
-            const inkoopPrice = price * 0.7;
+            // Pas 20% inkoopkorting toe
+            const inkoopPrice = price * 0.8;
 
             if (showInclBTW) {{
                 return `€${{inkoopPrice.toFixed(2)}} <span class="btw-label">(incl. BTW)</span>`;
@@ -533,13 +578,22 @@ html_template = f'''<!DOCTYPE html>
             noResults.style.display = 'none';
 
             grid.innerHTML = products.map(product => {{
+                const isReserved = RESERVED_SKUS.includes(product.sku);
+
                 return `
-                    <div class="product-card">
-                        <img src="${{product.images[0] || 'placeholder.jpg'}}"
-                             alt="${{product.title}}"
-                             class="product-image"
-                             onclick="openLightbox('${{product.images[0]}}')"
-                             onerror="this.src='https://via.placeholder.com/300x250?text=Geen+afbeelding'">
+                    <div class="product-card ${{isReserved ? 'reserved' : ''}}">
+                        <div class="product-image-container">
+                            <img src="${{product.images[0] || 'placeholder.jpg'}}"
+                                 alt="${{product.title}}"
+                                 class="product-image"
+                                 onclick="openLightbox('${{product.images[0]}}')"
+                                 onerror="this.src='https://via.placeholder.com/300x250?text=Geen+afbeelding'">
+                            ${{isReserved ? `
+                                <div class="reserved-overlay">
+                                    <div class="reserved-badge">Gereserveerd</div>
+                                </div>
+                            ` : ''}}
+                        </div>
 
                         <div class="product-info">
                             <div class="product-title">${{product.title}}</div>
