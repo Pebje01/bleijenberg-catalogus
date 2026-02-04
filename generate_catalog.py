@@ -1,0 +1,471 @@
+#!/usr/bin/env python3
+"""Generate catalogus.html with embedded product data"""
+
+import json
+
+# Lees gefilterde producten
+with open('products_filtered.json', 'r', encoding='utf-8') as f:
+    products = json.load(f)
+
+# Converteer naar JavaScript array
+products_js = json.dumps(products, ensure_ascii=False)
+
+html_template = f'''<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bleijenberg Catalogus</title>
+    <style>
+        * {{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }}
+
+        body {{
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }}
+
+        /* Login scherm */
+        #login-screen {{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            z-index: 1000;
+        }}
+
+        .login-box {{
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            width: 100%;
+            max-width: 400px;
+        }}
+
+        .login-box h1 {{
+            color: #333;
+            margin-bottom: 30px;
+            text-align: center;
+        }}
+
+        .login-box input {{
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+        }}
+
+        .login-box input:focus {{
+            outline: none;
+            border-color: #667eea;
+        }}
+
+        .login-box button {{
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }}
+
+        .login-box button:hover {{
+            transform: translateY(-2px);
+        }}
+
+        .error-message {{
+            color: #d32f2f;
+            text-align: center;
+            margin-top: 10px;
+            display: none;
+        }}
+
+        /* Catalogus */
+        #catalogus {{
+            display: none;
+            max-width: 1400px;
+            margin: 0 auto;
+        }}
+
+        header {{
+            background: white;
+            padding: 20px 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }}
+
+        h1 {{
+            color: #333;
+            margin-bottom: 20px;
+        }}
+
+        .controls {{
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            align-items: center;
+            margin-bottom: 20px;
+        }}
+
+        .search-box {{
+            flex: 1;
+            min-width: 200px;
+        }}
+
+        .search-box input {{
+            width: 100%;
+            padding: 12px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+        }}
+
+        .search-box input:focus {{
+            outline: none;
+            border-color: #667eea;
+        }}
+
+        .logout-btn {{
+            padding: 12px 24px;
+            background: #d32f2f;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }}
+
+        .logout-btn:hover {{
+            transform: translateY(-2px);
+        }}
+
+        .stats {{
+            display: flex;
+            gap: 20px;
+            padding: 15px;
+            background: #f5f5f5;
+            border-radius: 8px;
+        }}
+
+        .stat-item {{
+            font-size: 14px;
+            color: #666;
+        }}
+
+        .stat-item strong {{
+            color: #333;
+        }}
+
+        .product-grid {{
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }}
+
+        .product-card {{
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }}
+
+        .product-card:hover {{
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }}
+
+        .product-image {{
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            cursor: pointer;
+        }}
+
+        .product-info {{
+            padding: 20px;
+        }}
+
+        .product-title {{
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+        }}
+
+        .product-sku {{
+            font-size: 12px;
+            color: #999;
+            margin-bottom: 10px;
+            font-family: monospace;
+        }}
+
+        .product-price {{
+            font-size: 24px;
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 10px;
+        }}
+
+        .product-dimensions {{
+            color: #666;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }}
+
+        .product-description {{
+            color: #666;
+            font-size: 14px;
+            margin-top: 10px;
+            line-height: 1.5;
+        }}
+
+        .product-link {{
+            display: inline-block;
+            margin-top: 10px;
+            color: #667eea;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+        }}
+
+        .product-link:hover {{
+            text-decoration: underline;
+        }}
+
+        /* Lightbox voor afbeeldingen */
+        #lightbox {{
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.9);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }}
+
+        #lightbox img {{
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 10px;
+        }}
+
+        #lightbox .close {{
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            color: white;
+            font-size: 40px;
+            cursor: pointer;
+        }}
+
+        .no-results {{
+            text-align: center;
+            padding: 60px;
+            background: white;
+            border-radius: 15px;
+            color: #666;
+        }}
+
+        @media (max-width: 768px) {{
+            .controls {{
+                flex-direction: column;
+                align-items: stretch;
+            }}
+
+            .product-grid {{
+                grid-template-columns: 1fr;
+            }}
+        }}
+    </style>
+</head>
+<body>
+    <!-- Login Scherm -->
+    <div id="login-screen">
+        <div class="login-box">
+            <h1>Bleijenberg Catalogus</h1>
+            <input type="password" id="password-input" placeholder="Voer wachtwoord in" />
+            <button onclick="checkPassword()">Inloggen</button>
+            <div class="error-message" id="error-message">Onjuist wachtwoord</div>
+        </div>
+    </div>
+
+    <!-- Catalogus -->
+    <div id="catalogus">
+        <header>
+            <h1>Bleijenberg Productcatalogus</h1>
+
+            <div class="controls">
+                <div class="search-box">
+                    <input type="text" id="search" placeholder="Zoek op titel, SKU of maten..." oninput="filterProducts()" />
+                </div>
+
+                <button class="logout-btn" onclick="logout()">Uitloggen</button>
+            </div>
+
+            <div class="stats">
+                <div class="stat-item"><strong id="product-count">0</strong> producten</div>
+                <div class="stat-item"><strong id="visible-count">0</strong> zichtbaar</div>
+            </div>
+        </header>
+
+        <div class="product-grid" id="product-grid"></div>
+
+        <div class="no-results" id="no-results" style="display: none;">
+            Geen producten gevonden
+        </div>
+    </div>
+
+    <!-- Lightbox -->
+    <div id="lightbox" onclick="closeLightbox()">
+        <span class="close">&times;</span>
+        <img id="lightbox-img" src="" alt="">
+    </div>
+
+    <script>
+        const PASSWORD = 'potten01';
+
+        // Productdata direct embedded
+        const productsData = {products_js};
+
+        // Login functie
+        function checkPassword() {{
+            const input = document.getElementById('password-input').value;
+            if (input === PASSWORD) {{
+                document.getElementById('login-screen').style.display = 'none';
+                document.getElementById('catalogus').style.display = 'block';
+                displayProducts(productsData);
+                updateStats();
+            }} else {{
+                document.getElementById('error-message').style.display = 'block';
+            }}
+        }}
+
+        // Enter key support voor login
+        document.getElementById('password-input')?.addEventListener('keypress', function(e) {{
+            if (e.key === 'Enter') {{
+                checkPassword();
+            }}
+        }});
+
+        // Logout
+        function logout() {{
+            document.getElementById('login-screen').style.display = 'flex';
+            document.getElementById('catalogus').style.display = 'none';
+            document.getElementById('password-input').value = '';
+            document.getElementById('error-message').style.display = 'none';
+        }}
+
+        // Toon producten
+        function displayProducts(products) {{
+            const grid = document.getElementById('product-grid');
+            const noResults = document.getElementById('no-results');
+
+            if (products.length === 0) {{
+                grid.innerHTML = '';
+                noResults.style.display = 'block';
+                return;
+            }}
+
+            noResults.style.display = 'none';
+
+            grid.innerHTML = products.map(product => {{
+                return `
+                    <div class="product-card">
+                        <img src="${{product.images[0] || 'placeholder.jpg'}}"
+                             alt="${{product.title}}"
+                             class="product-image"
+                             onclick="openLightbox('${{product.images[0]}}')"
+                             onerror="this.src='https://via.placeholder.com/300x250?text=Geen+afbeelding'">
+
+                        <div class="product-info">
+                            <div class="product-title">${{product.title}}</div>
+                            ${{product.sku ? `<div class="product-sku">SKU: ${{product.sku}}</div>` : ''}}
+
+                            <div class="product-price">${{product.price}}</div>
+
+                            ${{product.dimensions ? `<div class="product-dimensions">📏 ${{product.dimensions}} cm</div>` : ''}}
+
+                            ${{product.description ? `<div class="product-description">${{product.description.substring(0, 150)}}${{product.description.length > 150 ? '...' : ''}}</div>` : ''}}
+
+                            <a href="${{product.url}}" target="_blank" class="product-link">Bekijk op website →</a>
+                        </div>
+                    </div>
+                `;
+            }}).join('');
+
+            updateStats(products.length);
+        }}
+
+        // Filter producten
+        function filterProducts() {{
+            const searchTerm = document.getElementById('search').value.toLowerCase();
+
+            const filtered = productsData.filter(product => {{
+                return product.title.toLowerCase().includes(searchTerm) ||
+                       product.description.toLowerCase().includes(searchTerm) ||
+                       product.sku.toLowerCase().includes(searchTerm) ||
+                       product.dimensions.toLowerCase().includes(searchTerm);
+            }});
+
+            displayProducts(filtered);
+        }}
+
+        // Update statistieken
+        function updateStats(visibleCount = null) {{
+            document.getElementById('product-count').textContent = productsData.length;
+            document.getElementById('visible-count').textContent = visibleCount !== null ? visibleCount : productsData.length;
+        }}
+
+        // Lightbox functies
+        function openLightbox(imageSrc) {{
+            document.getElementById('lightbox').style.display = 'flex';
+            document.getElementById('lightbox-img').src = imageSrc;
+        }}
+
+        function closeLightbox() {{
+            document.getElementById('lightbox').style.display = 'none';
+        }}
+
+        // ESC key voor lightbox sluiten
+        document.addEventListener('keydown', function(e) {{
+            if (e.key === 'Escape') {{
+                closeLightbox();
+            }}
+        }});
+    </script>
+</body>
+</html>'''
+
+# Schrijf naar catalogus.html
+with open('catalogus.html', 'w', encoding='utf-8') as f:
+    f.write(html_template)
+
+print('✓ Catalogus HTML gegenereerd met:')
+print(f'  - {len(products)} producten (zonder testproducten)')
+print('  - Wachtwoord: potten01')
+print('  - SKU weergave')
+print('  - Geen voorraad weergave')

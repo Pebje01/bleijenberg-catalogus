@@ -1,0 +1,23 @@
+# Python
+venv/
+__pycache__/
+*.py[cod]
+*.so
+*.egg
+*.egg-info/
+
+# Mac
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Claude
+.claude/
+
+# IDE
+.vscode/
+.idea/
+
+# Temp files
+*.log
+*.tmp
