@@ -45,93 +45,9 @@ html_template = f'''<!DOCTYPE html>
             z-index: 0;
         }}
 
-        /* Login scherm */
-        #login-screen {{
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('BB-logo-achtergrond.webp') center/cover no-repeat;
-            z-index: 1000;
-        }}
-
-        #login-screen::before {{
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.3);
-            z-index: -1;
-        }}
-
-        .login-box {{
-            background: white;
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
-            width: 100%;
-            max-width: 400px;
-            border: 2px solid #D4C4A8;
-            position: relative;
-            z-index: 10;
-        }}
-
-        .login-box h1 {{
-            color: #7A5022;
-            margin-bottom: 30px;
-            text-align: center;
-            font-size: 28px;
-        }}
-
-        .login-box input {{
-            width: 100%;
-            padding: 15px;
-            margin-bottom: 20px;
-            border: 2px solid #D4C4A8;
-            border-radius: 8px;
-            font-size: 16px;
-        }}
-
-        .login-box input:focus {{
-            outline: none;
-            border-color: #7A5022;
-        }}
-
-        .login-box button {{
-            width: 100%;
-            padding: 15px;
-            background: linear-gradient(135deg, #7A5022 0%, #5D3C1A 100%);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }}
-
-        .login-box button:hover {{
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(122, 80, 34, 0.3);
-        }}
-
-        .error-message {{
-            color: #BE010d;
-            text-align: center;
-            margin-top: 10px;
-            display: none;
-        }}
 
         /* Catalogus */
         #catalogus {{
-            display: none;
             max-width: 1400px;
             margin: 0 auto;
             position: relative;
@@ -206,21 +122,6 @@ html_template = f'''<!DOCTYPE html>
             background: #F5F0E8;
         }}
 
-        .logout-btn {{
-            padding: 12px 24px;
-            background: #5D3C1A;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: transform 0.2s, background 0.2s;
-        }}
-
-        .logout-btn:hover {{
-            transform: translateY(-2px);
-            background: #7A5022;
-        }}
 
         .btw-label {{
             font-size: 12px;
@@ -444,16 +345,6 @@ html_template = f'''<!DOCTYPE html>
     </style>
 </head>
 <body>
-    <!-- Login Scherm -->
-    <div id="login-screen">
-        <div class="login-box">
-            <h1>Bleijenberg Catalogus</h1>
-            <input type="password" id="password-input" placeholder="Voer wachtwoord in" />
-            <button onclick="checkPassword()">Inloggen</button>
-            <div class="error-message" id="error-message">Onjuist wachtwoord</div>
-        </div>
-    </div>
-
     <!-- Catalogus -->
     <div id="catalogus">
         <header>
@@ -468,8 +359,6 @@ html_template = f'''<!DOCTYPE html>
                     <button onclick="toggleBTW(true)">Incl. BTW</button>
                     <button class="active" onclick="toggleBTW(false)">Excl. BTW</button>
                 </div>
-
-                <button class="logout-btn" onclick="logout()">Uitloggen</button>
             </div>
 
             <div class="stats">
@@ -492,7 +381,6 @@ html_template = f'''<!DOCTYPE html>
     </div>
 
     <script>
-        const PASSWORD = 'potten01';
         const BTW_PERCENTAGE = 0.21; // 21% BTW
         let showInclBTW = false; // Default: excl. BTW
 
@@ -502,33 +390,11 @@ html_template = f'''<!DOCTYPE html>
         // Productdata direct embedded
         const productsData = {products_js};
 
-        // Login functie
-        function checkPassword() {{
-            const input = document.getElementById('password-input').value;
-            if (input === PASSWORD) {{
-                document.getElementById('login-screen').style.display = 'none';
-                document.getElementById('catalogus').style.display = 'block';
-                displayProducts(productsData);
-                updateStats();
-            }} else {{
-                document.getElementById('error-message').style.display = 'block';
-            }}
-        }}
-
-        // Enter key support voor login
-        document.getElementById('password-input')?.addEventListener('keypress', function(e) {{
-            if (e.key === 'Enter') {{
-                checkPassword();
-            }}
+        // Load producten bij start
+        window.addEventListener('DOMContentLoaded', function() {{
+            displayProducts(productsData);
+            updateStats();
         }});
-
-        // Logout
-        function logout() {{
-            document.getElementById('login-screen').style.display = 'flex';
-            document.getElementById('catalogus').style.display = 'none';
-            document.getElementById('password-input').value = '';
-            document.getElementById('error-message').style.display = 'none';
-        }}
 
         // BTW toggle functie
         function toggleBTW(inclBTW) {{
