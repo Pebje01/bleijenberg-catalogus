@@ -55,7 +55,7 @@ html_template = f'''<!DOCTYPE html>
             left: 0;
             right: 0;
             bottom: 0;
-            background: url('Scherm­afbeelding 2024-08-06 om 03.56.07.webp') center/cover no-repeat;
+            background: url('BB-logo-achtergrond.webp') center/cover no-repeat;
             z-index: 1000;
         }}
 
