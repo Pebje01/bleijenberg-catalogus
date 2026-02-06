@@ -2,11 +2,19 @@
   "version": 2,
   "builds": [
     {
-      "src": "catalogus.html",
+      "src": "*.html",
       "use": "@vercel/static"
     }
   ],
   "routes": [
+    {
+      "src": "/catalogus_montung.html",
+      "dest": "/catalogus_montung.html"
+    },
+    {
+      "src": "/catalogus_no_prices.html",
+      "dest": "/catalogus_no_prices.html"
+    },
     {
       "src": "/(.*)",
       "dest": "/catalogus.html"
