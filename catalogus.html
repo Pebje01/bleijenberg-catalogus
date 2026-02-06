@@ -316,6 +316,64 @@
             border: 2px dashed #D4C4A8;
         }
 
+        /* Gallery sectie */
+        .gallery-section {
+            margin-top: 60px;
+            padding: 40px 30px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(122, 80, 34, 0.15);
+            border-top: 4px solid #7A5022;
+        }
+
+        .gallery-section h2 {
+            color: #000000;
+            font-size: 28px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .gallery-placeholder {
+            width: 100%;
+            height: 250px;
+            background: linear-gradient(135deg, #E8DCC4 0%, #D4C4A8 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #7A5022;
+            font-size: 14px;
+            text-align: center;
+            padding: 20px;
+            font-weight: 600;
+            border: 2px dashed #D4C4A8;
+            border-radius: 10px;
+        }
+
         @media (max-width: 768px) {
             .controls {
                 flex-direction: column;
@@ -328,6 +386,10 @@
 
             h1 {
                 font-size: 24px;
+            }
+
+            .gallery-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -360,6 +422,14 @@
         <div class="no-results" id="no-results" style="display: none;">
             Geen producten gevonden
         </div>
+
+        <!-- Gallery Sectie -->
+        <div class="gallery-section">
+            <h2>🖼️ Projectvoorbeelden</h2>
+            <div class="gallery-grid" id="gallery-grid">
+                <!-- Galerij-afbeeldingen worden hier geladen -->
+            </div>
+        </div>
     </div>
 
     <!-- Lightbox -->
@@ -382,6 +452,7 @@
         window.addEventListener('DOMContentLoaded', function() {
             displayProducts(productsData);
             updateStats();
+            loadGallery();
         });
 
         // BTW toggle functie
@@ -504,6 +575,27 @@
                 closeLightbox();
             }
         });
+
+        // Gallery laden
+        function loadGallery() {
+            const galleryGrid = document.getElementById('gallery-grid');
+            
+            // Array met afbeeldingsnamen (plaats .jpg/.webp bestanden in dezelfde map)
+            const galleryImages = [
+                        { file: 'Afbeeldingen/Sfeerfoto_1.jpg', placeholder: true },
+                        { file: 'Afbeeldingen/Sfeerfoto_2.jpg', placeholder: true },
+            ];
+
+            galleryGrid.innerHTML = galleryImages.map((img, index) => {
+                return `
+                    <div class="gallery-item" onclick="openLightbox('${img.file}')">
+                        <img src="${img.file}" 
+                             alt="Projectvoorbeeld ${index + 1}"
+                             onerror="this.parentElement.innerHTML='<div class=\"gallery-placeholder\">Plaats hier afbeelding:<br><strong>${img.file}</strong></div>'">
+                    </div>
+                `;
+            }).join('');
+        }
     </script>
 </body>
 </html>
