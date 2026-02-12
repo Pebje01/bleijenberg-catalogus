@@ -646,13 +646,13 @@
                     <span class="amount">${formatPrice(300)}</span>
                 </div>
                 <div class="totaal-line subtotaal">
-                    <span class="label">Korting op potten</span>
-                    <span class="amount">-${formatPrice(200)}</span>
+                    <span class="label">Extra korting op potten</span>
+                    <span class="amount">-${formatPrice(209.88)}</span>
                 </div>
             `;
 
             totalExcl += 300; // Transport
-            totalExcl -= 200; // Korting
+            totalExcl -= 209.88; // Korting
 
             lines += `
                 <div class="totaal-line totaal">
@@ -706,11 +706,11 @@
             // Korting
             rows += `<tr>
                 <td></td>
-                <td>Korting op potten</td>
+                <td>Extra korting op potten</td>
                 <td></td>
-                <td class="price-col">-${formatPrice(200)}</td>
+                <td class="price-col">-${formatPrice(209.88)}</td>
             </tr>`;
-            totalExcl -= 200;
+            totalExcl -= 209.88;
 
             tbody.innerHTML = rows;
 
