@@ -636,10 +636,11 @@
                 `;
             }).join('');
 
-            totalExcl += 300; // Transport
-            totalExcl -= 200; // Korting
-
             lines += `
+                <div class="totaal-line btw">
+                    <span class="label">Subtotaal potten</span>
+                    <span class="amount">${formatPrice(totalExcl)}</span>
+                </div>
                 <div class="totaal-line subtotaal">
                     <span class="label">Transport levering aan adres</span>
                     <span class="amount">${formatPrice(300)}</span>
@@ -648,6 +649,12 @@
                     <span class="label">Korting op potten</span>
                     <span class="amount">-${formatPrice(200)}</span>
                 </div>
+            `;
+
+            totalExcl += 300; // Transport
+            totalExcl -= 200; // Korting
+
+            lines += `
                 <div class="totaal-line totaal">
                     <span class="label">Totaal excl. BTW</span>
                     <span class="amount">${formatPrice(totalExcl)}</span>
@@ -678,6 +685,14 @@
                     <td class="price-col">${formatPrice(excl)}</td>
                 </tr>`;
             }).join('');
+
+            // Subtotaal potten
+            rows += `<tr style="font-weight: 600; border-top: 1px solid #D4C4A8;">
+                <td></td>
+                <td>Subtotaal potten</td>
+                <td></td>
+                <td class="price-col">${formatPrice(totalExcl)}</td>
+            </tr>`;
 
             // Transport
             rows += `<tr>
