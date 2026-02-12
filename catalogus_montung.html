@@ -139,6 +139,16 @@
             opacity: 0.92;
         }
 
+        .product-card.highlighted {
+            border: 3px solid #DC2626 !important;
+            box-shadow: 0 5px 20px rgba(220, 38, 38, 0.3);
+        }
+
+        .product-card.highlighted:hover {
+            border-color: #DC2626 !important;
+            box-shadow: 0 10px 30px rgba(220, 38, 38, 0.4);
+        }
+
         .product-image-container {
             position: relative;
             width: 100%;
@@ -173,6 +183,48 @@
 
         .reserved-badge {
             background: rgba(122, 80, 34, 0.85);
+            color: white;
+            padding: 10px 24px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+            transform: rotate(-3deg);
+        }
+
+        .product-card.sold {
+            opacity: 0.75;
+        }
+
+        .sold .product-image {
+            filter: grayscale(40%) brightness(0.9);
+        }
+
+        .sold-badge {
+            background: rgba(220, 38, 38, 0.85);
+            color: white;
+            padding: 10px 24px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+            transform: rotate(-3deg);
+        }
+
+        .product-card.discontinued {
+            opacity: 0.65;
+        }
+
+        .discontinued .product-image {
+            filter: grayscale(60%) brightness(0.85);
+        }
+
+        .discontinued-badge {
+            background: rgba(107, 114, 128, 0.85);
             color: white;
             padding: 10px 24px;
             border-radius: 6px;
@@ -408,6 +460,15 @@
         // Gereserveerde producten (op basis van SKU)
         const RESERVED_SKUS = ['CLP00006', 'CLP00007'];
 
+        // Verkochte producten
+        const SOLD_SKUS = ['LIP00012'];
+
+        // Uit assortiment
+        const DISCONTINUED_SKUS = ['LIP00025'];
+
+        // Gemarkeerde producten (rood omrand)
+        const HIGHLIGHTED_SKUS = ['LIP00010', 'LIP00019', 'LIT00013', 'LIP00015', 'LIT00016'];
+
         // Productdata direct embedded
         const productsData = [{"url": "https://bleijenberg.eu/product/beige-vintage-terra-kleien-vaas/", "title": "Beige vintage / terra kleien vaas (61×60)", "price": "€195.00", "sku": "CLP00001", "dimensions": "", "description": "", "images": ["https://bleijenberg.eu/wp-content/uploads/2025/03/CLP00001-1.png"], "stock": ""}, {"url": "https://bleijenberg.eu/product/mooie-beige-tinten-klei-vaas-57x57/", "title": "Mooie beige tinten klei vaas (57×57)", "price": "€195.00", "sku": "CLP00003", "dimensions": "", "description": "", "images": ["https://bleijenberg.eu/wp-content/uploads/2025/03/CLP00003.png"], "stock": ""}, {"url": "https://bleijenberg.eu/product/mooie-terra-en-beige-vintage-klei-vaas/", "title": "Mooie terra en beige vintage klei vaas (55×55)", "price": "€195.00", "sku": "CLP00004", "dimensions": "", "description": "", "images": ["https://bleijenberg.eu/wp-content/uploads/2025/03/CLP00004.png"], "stock": ""}, {"url": "https://bleijenberg.eu/product/authentieke-vintage-vaas-terra-en-zand-kleur/", "title": "Authentieke vintage vaas terra en zand kleur (56×56)", "price": "€195.00", "sku": "CLP00005", "dimensions": "", "description": "", "images": ["https://bleijenberg.eu/wp-content/uploads/2025/03/CLP00005.png"], "stock": ""}, {"url": "https://bleijenberg.eu/product/vintage-grote-vaas-met-randen/", "title": "Vintage grote vaas met randen (69×63)", "price": "€229.00", "sku": "CLP00006", "dimensions": "", "description": "", "images": ["https://bleijenberg.eu/wp-content/uploads/2025/03/CLP00006.png"], "stock": ""}, {"url": "https://bleijenberg.eu/product/vintage-kruik-met-ribbelstructuur/", "title": "Vintage kruik met ribbelstructuur", "price": "€229.00", "sku": "CLP00007", "dimensions": "", "description": "", "images": ["https://bleijenberg.eu/wp-content/uploads/2025/03/CLP00007.png"], "stock": ""}, {"url": "https://bleijenberg.eu/product/antieke-natuurstenen-trog-met-verweerde-patina/", "title": "Antieke natuurstenen trog met verweerde patina", "price": "€399.00", "sku": "LIT00001", "dimensions": "", "description": "", "images": ["https://bleijenberg.eu/wp-content/uploads/2025/03/Untitled-2-2.png", "https://bleijenberg.eu/wp-content/uploads/2025/03/LIT00001-02.jpg", "https://bleijenberg.eu/wp-content/uploads/2025/03/LIT00001-01.jpg", "https://bleijenberg.eu/wp-content/uploads/2025/03/Untitled-2-2.png"], "stock": ""}, {"url": "https://bleijenberg.eu/product/jumbo-natuurstenen-pot-beige-rond-47x85/", "title": "Jumbo natuurstenen pot beige rond (47×85)", "price": "€749.00", "sku": "LIP00010", "dimensions": "47×85", "description": "Jumbo natuurstenen pot beige rond (47×85)", "images": ["https://bleijenberg.eu/wp-content/uploads/2025/03/LIP00010-04.jpg", "https://bleijenberg.eu/wp-content/uploads/2025/03/LIP00010-02.jpg", "https://bleijenberg.eu/wp-content/uploads/2025/03/LIP00010-03.jpg", "https://bleijenberg.eu/wp-content/uploads/2025/03/LIP00010-01.jpg", "https://bleijenberg.eu/wp-content/uploads/2025/03/LIP00010-04.jpg", "https://bleijenberg.eu/wp-content/uploads/2025/03/LIP00010-05.jpg"], "stock": ""}, {"url": "https://bleijenberg.eu/product/beige-natuurstenen-jumbo-pot-met-patina-42x73/", "title": "Beige natuurstenen jumbo pot met patina (42×73)", "price": "€579.00", "sku": "LIP00008", "dimensions": "42 x 73", "description": "Robuuste beige natuurstenen jumbo pot met patina.Afmetingen:42 x 73", "images": ["https://bleijenberg.eu/wp-content/uploads/2025/03/Untitled-4-2-1.png", "https://bleijenberg.eu/wp-content/uploads/2025/03/LIP00008-02.jpg", "https://bleijenberg.eu/wp-content/uploads/2025/03/LIP00008-01.jpg", "https://bleijenberg.eu/wp-content/uploads/2025/03/LIP00008-06.jpg", "https://bleijenberg.eu/wp-content/uploads/2025/03/LIP00008-05.jpg", "https://bleijenberg.eu/wp-content/uploads/2025/03/LIP00003-04.jpg", "https://bleijenberg.eu/wp-content/uploads/2025/03/LIP00008-04.jpg", "https://bleijenberg.eu/wp-content/uploads/2025/03/LIP00008-03.jpg"], "stock": ""}, {"url": "https://bleijenberg.eu/product/beige-natuurstenen-pot-met-lichte-patina-rond-42x73/", "title": "Beige natuurstenen pot met lichte patina rond (42×73)", "price": "€599.00", "sku": "LIP00003", "dimensions": "", "description": "", "images": ["https://bleijenberg.eu/wp-content/uploads/2025/03/Untitled-4-1.png"], "stock": ""}, {"url": "https://bleijenberg.eu/product/grijze-antieke-jumbo-model-ronde-plantenpot-52x84/", "title": "Grijze antieke jumbo model ronde plantenpot (52×84)", "price": "€749.00", "sku": "LIP00007", "dimensions": "52×84", "description": "Grijze antieke grote ronde plantenpot (52×84)", "images": ["https://bleijenberg.eu/wp-content/uploads/2025/03/LIP00007-03.jpg", "https://bleijenberg.eu/wp-content/uploads/2025/03/LIP00007-04.jpg", "https://bleijenberg.eu/wp-content/uploads/2025/03/LIP00007-03.jpg", "https://bleijenberg.eu/wp-content/uploads/2025/03/LIP00007-05.jpg"], "stock": ""}, {"url": "https://bleijenberg.eu/product/natuurstenen-pot-taps/", "title": "Natuurstenen taps toelopende pot – Rond (38×57)", "price": "€429.00", "sku": "LIP00021", "dimensions": "38 x 57 x 57", "description": "Bijzondere organische natuurstenen pot in licht beige/grijs met een bijzondere patina. De pot loopt subtiel taps toe en heeft dunne, verfijnde randen. Uniek model!Afmetingen (HxLxB):38 x 57 x 57", "images": ["https://bleijenberg.eu/wp-content/uploads/2025/02/Untitled-2-5.png"], "stock": "1 op voorraad"}, {"url": "https://bleijenberg.eu/product/natuurstenen-pot-beige-groot-rond/", "title": "Natuurstenen pot beige groot – Rond (50×60)", "price": "€499.00", "sku": "LIP00017", "dimensions": "50 x 60 x 60", "description": "Mooie ronde schuin aflopende lichtbeige pot, met dikke randen voor een robuuste uitstraling. Deze pot is meer schoongemaakt voor een esthetische lichtere look, maar heeft nog steeds een lichte patina waardoor het zijn karakter behoudt.Afmetingen (HxLxB):50 x 60 x 60", "images": ["https://bleijenberg.eu/wp-content/uploads/2025/02/Untitled-4-2.png", "https://i.vimeocdn.com/video/1981893392-00f7f494fcf26bcf67e08a2e1b77d5e9f058586d71cd84b88a143f48990f2af6-d_200x150?r=pad", "https://bleijenberg.eu/wp-content/uploads/2025/02/potten-27.jpg", "https://bleijenberg.eu/wp-content/uploads/2025/02/potten-28.jpg"], "stock": "1 op voorraad"}, {"url": "https://bleijenberg.eu/product/vintage-trog-mospatina-rechthoek/", "title": "Vintage trog met mospatina – Rechthoekig (33x56x51)", "price": "€349.00", "sku": "LIT00026", "dimensions": "33 x 56 x 51", "description": "Massieve, rechthoekige natuurstenen trog met een doorleefde uitstraling. De robuuste vorm en verweerde patina geven het een authentiek karakter. Perfect als plantenbak, waterbak of decoratief element in de tuin.Afmetingen (HxLxB):33 x 56 x 51", "images": ["https://bleijenberg.eu/wp-content/uploads/2025/02/Untitled-2-1.png", "https://bleijenberg.eu/wp-content/uploads/2025/02/potten-24_1.jpg", "https://bleijenberg.eu/wp-content/uploads/2025/02/potten-22_1.jpg"], "stock": "1 op voorraad"}, {"url": "https://bleijenberg.eu/product/antieke-natuurstenen-trog-vierkant/", "title": "Antieke natuurstenen trog – Vierkant", "price": "€369.00", "sku": "LIT00011", "dimensions": "38 x 54 x 45", "description": "Vierkante / rechthoekige stenen pot voor zowel binnen als buiten. De pot heeft een iets ongelijke hoogte wat het een organisch model geeft. De lichte mospatina geeft het een mooie antieke look.Afmetingen (HxLxB):38 x 54 x 45", "images": ["https://bleijenberg.eu/wp-content/uploads/2025/02/Untitled-2-9.png", "https://bleijenberg.eu/wp-content/uploads/2025/02/LIP00011-01.jpg", "https://bleijenberg.eu/wp-content/uploads/2025/02/LIP00011-03.jpg"], "stock": "1 op voorraad"}, {"url": "https://bleijenberg.eu/product/natuurstenen-pot-licht-beige-rond/", "title": "Natuursteen creme beige – Bijzondere afwerking – rond (53 x 67)", "price": "€599.00", "sku": "LIP00012", "dimensions": "53 x 67 x 67", "description": "Natuurstenen ronde pot voor zowel binnen als buiten. Deze pot heeft een licht beige tot creme kleur, met een iets donkerdere patina. Leuk en bijzonder is de organische rand, die het een unieke uitstraling geeft.Afmetingen (HxLxB):53 x 67 x 67", "images": ["https://bleijenberg.eu/wp-content/uploads/2025/02/Untitled-4-6.png", "https://bleijenberg.eu/wp-content/uploads/2025/02/potten-86.jpg", "https://bleijenberg.eu/wp-content/uploads/2025/02/potten-85_1-1.jpg"], "stock": "1 op voorraad"}, {"url": "https://bleijenberg.eu/product/vintage-natuurstenen-trog-beige-vierkant/", "title": "Vintage natuursteen trog beige – Vierkant/rechthoekig", "price": "€329.00", "sku": "LIT00023", "dimensions": "32 x 55 x 37", "description": "Natuurstenen rechthoekige pot voor zowel binnen als buiten. Deze pot heeft een beige, met een grijzige patina. De pot is niet helemaal vlak, één hoek heeft een schuine afwerking wat hem net iets aparter maakt.Afmetingen (HxLxB):32 x 55 x 37", "images": ["https://bleijenberg.eu/wp-content/uploads/2024/09/Untitled-3.png", "https://bleijenberg.eu/wp-content/uploads/2024/09/potten-16_1-scaled.jpg", "https://bleijenberg.eu/wp-content/uploads/2024/09/potten-14_1-scaled.jpg", "https://bleijenberg.eu/wp-content/uploads/2024/09/potten-12_1-scaled.jpg"], "stock": "1 op voorraad"}, {"url": "https://bleijenberg.eu/product/natuursteen-grote-pot-beige-rond/", "title": "Natuurstenen grote pot – Beige – rond (30×85)", "price": "€749.00", "sku": "LIP00025", "dimensions": "30 x 85 x 85", "description": "Natuurstenen ronde pot voor zowel binnen als buiten. De pot is een lager model, maar met een grote diameter van wel 85 centimeter! De pot heeft een mooie lichtere beige kleur. Een van onze uniekere modellen.Afmetingen (HxLxB):30 x 85 x 85", "images": ["https://bleijenberg.eu/wp-content/uploads/2025/02/Untitled-2-7.png", "https://bleijenberg.eu/wp-content/uploads/2025/02/IMG_4688.jpeg", "https://bleijenberg.eu/wp-content/uploads/2025/02/potten-67.jpg", "https://bleijenberg.eu/wp-content/uploads/2025/02/potten-63.jpg"], "stock": "1 op voorraad"}, {"url": "https://bleijenberg.eu/product/natuursteen-vintage-tog-vierkant/", "title": "Natuurstenen vintage trog – Vierkant (37x60x52)", "price": "€349.00", "sku": "LIT00027", "dimensions": "37 x 60 x 53", "description": "Natuurstenen vierkante pot voor zowel binnen als buiten. De pot heeft een mooie robuuste uitstraling met een mooie mospatina aan de zijkanten. Leuk als plantenbak voor zowel binnen als buiten.Afmetingen (HxLxB):37 x 60 x 53", "images": ["https://bleijenberg.eu/wp-content/uploads/2025/02/Untitled-2-6.png", "https://bleijenberg.eu/wp-content/uploads/2025/02/potten-60-1.jpg", "https://bleijenberg.eu/wp-content/uploads/2025/02/potten-57-1.jpg"], "stock": "1 op voorraad"}, {"url": "https://bleijenberg.eu/product/natuurstenen-grote-pot-beige-rond/", "title": "Natuurstenen grote pot – Beige – Rond (48×56)", "price": "€499.00", "sku": "LIP00015", "dimensions": "48 x 56 x 56", "description": "Mooie ronde schuin aflopende lichtbeige pot, met dikke randen voor een robuuste uitstraling. Deze pot is meer schoongemaakt voor een esthetische lichtere look, maar heeft nog steeds een lichte patina waardoor het zijn karakter behoudt.Afmetingen (HxLxB):48 x 56 x 56", "images": ["https://bleijenberg.eu/wp-content/uploads/2025/02/Untitled-4-4.png"], "stock": "1 op voorraad"}, {"url": "https://bleijenberg.eu/product/natuursteen-pot-groot-rond/", "title": "Natuurstenen pot Jumbo model – Rond (46h Ø85)", "price": "€709.00", "sku": "LIP00004", "dimensions": "46 x 85 x 85", "description": "Grote, robuuste natuurstenen pot met een doorleefde uitstraling. Een van onze jumbo potten met dikke randen en een stoere, natuurlijke textuur. Een behoorlijk statement in je tuin! 😉Afmetingen (HxLxB):46 x 85 x 85", "images": ["https://bleijenberg.eu/wp-content/uploads/2025/02/LIP00004-1.jpg"], "stock": "1 op voorraad"}, {"url": "https://bleijenberg.eu/product/pot-6/", "title": "Vintage natuursteen grote trog – Rechthoekig (30x77x49)", "price": "€439.00", "sku": "LIT00016", "dimensions": "30 x 77 x 49", "description": "Mooie rechthoekige vintage trog met een lichte warme beige kleur. Het oppervlakte heeft een mooi ruw relief, van dik kalksteen. Perfect te gebruiken als plantenbak of om te toveren tot een mooie fontein.Afmetingen (HxLxB):30 x 77 x 49", "images": ["https://bleijenberg.eu/wp-content/uploads/2025/02/Untitled-4-5.png", "https://bleijenberg.eu/wp-content/uploads/2025/02/potten-54.jpg", "https://bleijenberg.eu/wp-content/uploads/2025/02/potten-52.jpg"], "stock": "1 op voorraad"}, {"url": "https://bleijenberg.eu/product/natuurstenen-large-vintage-plantenpot-beige-grijs-rond/", "title": "Natuurstenen plantenpot beige/grijs – Rond (40 x Ø58)", "price": "€459.00", "sku": "LIP00019", "dimensions": "40 x 58 x 58", "description": "Natuurstenen ronde pot voor zowel binnen als buiten. Deze pot heeft een beige en grijze kleur, met een vrij egale afwerking. De mos op de pot geeft het een mooie natuurlijke esthetische uitstraling. Te gebruiken als decoratief element of plantenbak.Deze pot is ook om te bouwen als fontein tegen een meerprijs. Vraag naar meer informatie!Afmetingen (HxLxB):40 x 58 x 58", "images": ["https://bleijenberg.eu/wp-content/uploads/2024/09/Untitled-1.png", "https://bleijenberg.eu/wp-content/uploads/2025/02/potten-5_1.jpg", "https://bleijenberg.eu/wp-content/uploads/2025/02/potten-3_1.jpg", "https://bleijenberg.eu/wp-content/uploads/2025/02/Untitled-2.png", "https://bleijenberg.eu/wp-content/uploads/2024/09/Untitled-2-800x800-1.png"], "stock": "1 op voorraad"}, {"url": "https://bleijenberg.eu/product/natuurstenen-pot-beige-rond/", "title": "Natuurstenen pot beige – Rond", "price": "€479.00", "sku": "LIP00018", "dimensions": "37 x 63 x 63", "description": "Natuurstenen lagere ronde pot voor zowel binnen als buiten. Deze pot heeft een beige kleur, met een robuuste afwerking. Leuk detail zijn de oppervlakkige kuiltjes en inkepingen in het steen. De pot loop iets taps toe naar binnen.Afmetingen (HxLxB):37 x 63 x 63", "images": ["https://bleijenberg.eu/wp-content/uploads/2024/09/Untitled-2-1-1.png", "https://bleijenberg.eu/wp-content/uploads/2024/09/Untitled-2-1.png", "https://bleijenberg.eu/wp-content/uploads/2024/09/potten-11_1-scaled.jpg", "https://bleijenberg.eu/wp-content/uploads/2024/09/potten-9_1-scaled.jpg"], "stock": "1 op voorraad"}, {"url": "https://bleijenberg.eu/product/natuursteen-kleine-pot-unieke-afwerking-taps/", "title": "Traditionele opslagpot – Unieke afwerking – Taps (33 x 43)", "price": "€199.00", "sku": "LIP00022", "dimensions": "33 x 43 x 43", "description": "Antieke kleine robuuste natuurstenen pot met een doorleefde patina in beige- en grijstinten. De binnenste rand loopt taps toe. De uitloop aan de zijkant suggereert dat het ooit een traditionele water- of opslagpot was, wat het historische charme geeft.Afmetingen (HxLxB):33 x 43 x 43", "images": ["https://bleijenberg.eu/wp-content/uploads/2025/02/Untitled-2-2.png", "https://bleijenberg.eu/wp-content/uploads/2025/02/potten-35_1.jpg", "https://bleijenberg.eu/wp-content/uploads/2025/02/potten-31_1.jpg"], "stock": "1 op voorraad"}, {"url": "https://bleijenberg.eu/product/natuurstenen-lichte-beige-pot-rechthoek/", "title": "Natuurstenen licht beige trog – Rechthoek (30x48x40)", "price": "€299.00", "sku": "LIT00020", "dimensions": "30 x 48 x 40", "description": "Robuuste natuurstenen rechthoekige trog met een mooie lichte beige kleur. Licht taps/schuin toelopend wat het een esthetische look geeft.Afmetingen (HxLxB):30 x 48 x 40", "images": ["https://bleijenberg.eu/wp-content/uploads/2025/02/Untitled-4-3.png", "https://bleijenberg.eu/wp-content/uploads/2025/02/potten-38_1.jpg", "https://bleijenberg.eu/wp-content/uploads/2025/02/potten-37.jpg"], "stock": "1 op voorraad"}, {"url": "https://bleijenberg.eu/product/vintage-trog-klein-vierkant/", "title": "Vintage trog klein – Vierkant (33x48x42)", "price": "€299.00", "sku": "LIT00024", "dimensions": "33 x 48 x 42", "description": "Mooie rechthoekige vintage trog met een warme beige kleur. De pot heeft een ruw relief van dik kalksteen, met dikke randen.Afmetingen (HxLxB):33 x 48 x 42", "images": ["https://bleijenberg.eu/wp-content/uploads/2025/02/Untitled-4-1.png", "https://bleijenberg.eu/wp-content/uploads/2024/09/potten-17_1.jpg", "https://bleijenberg.eu/wp-content/uploads/2025/02/potten-20.jpg"], "stock": "1 op voorraad"}, {"url": "https://bleijenberg.eu/product/natuursteen-pot-rond-grijs/", "title": "Natuurstenen pot rond grijs – Rond (49 x 70)", "price": "€599.00", "sku": "LIT00013", "dimensions": "49 x 70 x 70", "description": "Natuurstenen ronde pot voor zowel binnen als buiten. De pot heeft een mooie dunne rand en een grijze kleur met subtiele mospatina aan de zijkanten. Echt een antieke uitstraling!Afmetingen (HxLxB):49 x 70 x 70 cm", "images": ["https://bleijenberg.eu/wp-content/uploads/2025/02/Untitled-2-8.png", "https://bleijenberg.eu/wp-content/uploads/2025/02/potten-71-1.jpg"], "stock": "1 op voorraad"}];
 
@@ -433,9 +494,12 @@
 
             grid.innerHTML = products.map(product => {
                 const isReserved = RESERVED_SKUS.includes(product.sku);
+                const isSold = SOLD_SKUS.includes(product.sku);
+                const isDiscontinued = DISCONTINUED_SKUS.includes(product.sku);
+                const isHighlighted = HIGHLIGHTED_SKUS.includes(product.sku);
 
                 return `
-                    <div class="product-card ${isReserved ? 'reserved' : ''}">
+                    <div class="product-card ${isReserved ? 'reserved' : ''} ${isSold ? 'sold' : ''} ${isDiscontinued ? 'discontinued' : ''} ${isHighlighted ? 'highlighted' : ''}">
                         <div class="product-image-container">
                             <img src="${product.images[0] || 'placeholder.jpg'}"
                                  alt="${product.title}"
@@ -445,6 +509,16 @@
                             ${isReserved ? `
                                 <div class="reserved-overlay">
                                     <div class="reserved-badge">Gereserveerd</div>
+                                </div>
+                            ` : ''}
+                            ${isSold ? `
+                                <div class="reserved-overlay">
+                                    <div class="sold-badge">Verkocht</div>
+                                </div>
+                            ` : ''}
+                            ${isDiscontinued ? `
+                                <div class="reserved-overlay">
+                                    <div class="discontinued-badge">Uit assortiment</div>
                                 </div>
                             ` : ''}
                         </div>

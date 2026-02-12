@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bleijenberg – Offerte</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #E8DCC4 0%, #D4C4A8 100%);
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('Noise Seamless Vector Patterns copy.webp') repeat;
+            background-size: 100px 100px;
+            opacity: 0.5;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        #catalogus {
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            background: white;
+            padding: 30px 30px 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 20px rgba(122, 80, 34, 0.15);
+            border-top: 4px solid #7A5022;
+        }
+
+        h1 {
+            color: #000000;
+            font-size: 32px;
+            margin-bottom: 5px;
+        }
+
+        .offerte-subtitle {
+            color: #9B8B6F;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .offerte-info {
+            display: flex;
+            gap: 30px;
+            padding: 15px;
+            background: #F5F0E8;
+            border-radius: 8px;
+            border-left: 4px solid #7A5022;
+            flex-wrap: wrap;
+        }
+
+        .offerte-info-item {
+            font-size: 14px;
+            color: #333333;
+        }
+
+        .offerte-info-item strong {
+            color: #000000;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(122, 80, 34, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid #E8DCC4;
+            position: relative;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(122, 80, 34, 0.2);
+            border-color: #7A5022;
+        }
+
+        .product-number {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: rgba(122, 80, 34, 0.9);
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 14px;
+            z-index: 1;
+        }
+
+        .product-image-container {
+            position: relative;
+            width: 100%;
+            height: 250px;
+            overflow: hidden;
+        }
+
+        .product-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            cursor: pointer;
+            background: #F5F0E8;
+        }
+
+        .product-info {
+            padding: 20px;
+        }
+
+        .product-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #000000;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+
+        .product-sku {
+            font-size: 12px;
+            color: #9B8B6F;
+            margin-bottom: 10px;
+            font-family: monospace;
+            background: #F5F0E8;
+            padding: 4px 8px;
+            border-radius: 4px;
+            display: inline-block;
+        }
+
+        .product-prices {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid #E8DCC4;
+        }
+
+        .product-price-excl {
+            font-size: 22px;
+            font-weight: 700;
+            color: #7A5022;
+        }
+
+        .product-price-incl {
+            font-size: 14px;
+            color: #9B8B6F;
+            margin-top: 2px;
+        }
+
+        .product-dimensions {
+            color: #333333;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .product-description {
+            color: #333333;
+            font-size: 14px;
+            margin-top: 10px;
+            line-height: 1.5;
+        }
+
+        .product-link {
+            display: inline-block;
+            margin-top: 10px;
+            color: #7A5022;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+
+        .product-link:hover {
+            color: #5D3C1A;
+            text-decoration: underline;
+        }
+
+        /* Totaal sectie */
+        .totaal-section {
+            margin-top: 30px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(122, 80, 34, 0.15);
+            border-top: 4px solid #7A5022;
+            overflow: hidden;
+        }
+
+        .totaal-header {
+            padding: 20px 30px;
+            background: #F5F0E8;
+            border-bottom: 1px solid #E8DCC4;
+        }
+
+        .totaal-header h2 {
+            color: #000000;
+            font-size: 22px;
+        }
+
+        .totaal-lines {
+            padding: 20px 30px;
+        }
+
+        .totaal-line {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #F5F0E8;
+            font-size: 16px;
+            color: #333;
+        }
+
+        .totaal-line:last-child {
+            border-bottom: none;
+        }
+
+        .totaal-line.subtotaal {
+            font-weight: 500;
+        }
+
+        .totaal-line.btw {
+            color: #9B8B6F;
+            font-size: 15px;
+        }
+
+        .totaal-line.totaal {
+            border-top: 2px solid #7A5022;
+            margin-top: 5px;
+            padding-top: 15px;
+            font-weight: 700;
+            font-size: 20px;
+            color: #000;
+        }
+
+        .totaal-line .label {
+            flex: 1;
+        }
+
+        .totaal-line .amount {
+            text-align: right;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .totaal-line.totaal .amount {
+            color: #7A5022;
+            font-size: 24px;
+        }
+
+        /* Lightbox */
+        #lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(93, 60, 26, 0.95);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #lightbox img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 10px;
+            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        #lightbox .close {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            color: white;
+            font-size: 40px;
+            cursor: pointer;
+            background: rgba(122, 80, 34, 0.8);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+
+        #lightbox .close:hover {
+            background: rgba(122, 80, 34, 1);
+        }
+
+        @media (max-width: 768px) {
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            .offerte-info {
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .totaal-line.totaal .amount {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="catalogus">
+        <header>
+            <h1>Offerte</h1>
+            <p class="offerte-subtitle">Bleijenberg – Natuurstenen potten & troggen</p>
+
+            <div class="offerte-info">
+                <div class="offerte-info-item"><strong id="product-count">6</strong> producten</div>
+                <div class="offerte-info-item">Prijzen zijn <strong>excl. BTW</strong> (21%)</div>
+            </div>
+        </header>
+
+        <div class="product-grid" id="product-grid"></div>
+
+        <div class="totaal-section">
+            <div class="totaal-header">
+                <h2>Totaaloverzicht</h2>
+            </div>
+            <div class="totaal-lines" id="totaal-lines"></div>
+        </div>
+    </div>
+
+    <!-- Lightbox -->
+    <div id="lightbox" onclick="closeLightbox()">
+        <span class="close">&times;</span>
+        <img id="lightbox-img" src="" alt="">
+    </div>
+
+    <script>
+        const BTW_PERCENTAGE = 0.21;
+
+        const productsData = [
+            {
+                "title": "Jumbo natuurstenen pot beige rond (47×85)",
+                "price": "€749.00",
+                "sku": "LIP00010",
+                "dimensions": "47×85",
+                "description": "Jumbo natuurstenen pot beige rond (47×85)",
+                "images": [
+                    "https://bleijenberg.eu/wp-content/uploads/2025/03/LIP00010-04.jpg",
+                    "https://bleijenberg.eu/wp-content/uploads/2025/03/LIP00010-02.jpg",
+                    "https://bleijenberg.eu/wp-content/uploads/2025/03/LIP00010-03.jpg",
+                    "https://bleijenberg.eu/wp-content/uploads/2025/03/LIP00010-01.jpg",
+                    "https://bleijenberg.eu/wp-content/uploads/2025/03/LIP00010-05.jpg"
+                ],
+                "url": "https://bleijenberg.eu/product/jumbo-natuurstenen-pot-beige-rond-47x85/"
+            },
+            {
+                "title": "Natuurstenen plantenpot beige/grijs – Rond (40 x Ø58)",
+                "price": "€459.00",
+                "sku": "LIP00019",
+                "dimensions": "40 x 58 x 58",
+                "description": "Natuurstenen ronde pot voor zowel binnen als buiten. Deze pot heeft een beige en grijze kleur, met een vrij egale afwerking.",
+                "images": [
+                    "https://bleijenberg.eu/wp-content/uploads/2024/09/Untitled-1.png",
+                    "https://bleijenberg.eu/wp-content/uploads/2025/02/potten-5_1.jpg",
+                    "https://bleijenberg.eu/wp-content/uploads/2025/02/potten-3_1.jpg",
+                    "https://bleijenberg.eu/wp-content/uploads/2025/02/Untitled-2.png"
+                ],
+                "url": "https://bleijenberg.eu/product/natuurstenen-large-vintage-plantenpot-beige-grijs-rond/"
+            },
+            {
+                "title": "Natuurstenen pot rond grijs – Rond (49 x 70)",
+                "price": "€599.00",
+                "sku": "LIT00013",
+                "dimensions": "49 x 70 x 70",
+                "description": "Natuurstenen ronde pot voor zowel binnen als buiten. De pot heeft een mooie dunne rand en een grijze kleur met subtiele mospatina.",
+                "images": [
+                    "https://bleijenberg.eu/wp-content/uploads/2025/02/Untitled-2-8.png",
+                    "https://bleijenberg.eu/wp-content/uploads/2025/02/potten-71-1.jpg"
+                ],
+                "url": "https://bleijenberg.eu/product/natuursteen-pot-rond-grijs/"
+            },
+            {
+                "title": "Natuurstenen grote pot – Beige – Rond (48×56)",
+                "price": "€499.00",
+                "sku": "LIP00015",
+                "dimensions": "48 x 56 x 56",
+                "description": "Mooie ronde schuin aflopende lichtbeige pot, met dikke randen voor een robuuste uitstraling.",
+                "images": [
+                    "https://bleijenberg.eu/wp-content/uploads/2025/02/Untitled-4-4.png"
+                ],
+                "url": "https://bleijenberg.eu/product/natuurstenen-grote-pot-beige-rond/"
+            },
+            {
+                "title": "Vintage natuursteen grote trog – Rechthoekig (30x77x49)",
+                "price": "€439.00",
+                "sku": "LIT00016",
+                "dimensions": "30 x 77 x 49",
+                "description": "Mooie rechthoekige vintage trog met een lichte warme beige kleur. Het oppervlakte heeft een mooi ruw relief, van dik kalksteen.",
+                "images": [
+                    "https://bleijenberg.eu/wp-content/uploads/2025/02/Untitled-4-5.png",
+                    "https://bleijenberg.eu/wp-content/uploads/2025/02/potten-54.jpg",
+                    "https://bleijenberg.eu/wp-content/uploads/2025/02/potten-52.jpg"
+                ],
+                "url": "https://bleijenberg.eu/product/pot-6/"
+            },
+            {
+                "title": "Natuurstenen ronde pot – Robuust model (43x73)",
+                "price": "€597.44",
+                "sku": "",
+                "dimensions": "43 x 73 x 73",
+                "description": "",
+                "images": [
+                    "Afbeeldingen/LIP00002.png"
+                ],
+                "url": ""
+            }
+        ];
+
+        function getExclPrice(priceString) {
+            const price = parseFloat(priceString.replace('€', '').replace(',', '.'));
+            if (isNaN(price)) return 0;
+            return (price * 0.8) / (1 + BTW_PERCENTAGE);
+        }
+
+        function getInclPrice(priceString) {
+            const price = parseFloat(priceString.replace('€', '').replace(',', '.'));
+            if (isNaN(price)) return 0;
+            return price * 0.8;
+        }
+
+        function formatPrice(amount) {
+            return `€${amount.toFixed(2).replace('.', ',')}`;
+        }
+
+        window.addEventListener('DOMContentLoaded', function() {
+            displayProducts(productsData);
+            displayTotals(productsData);
+        });
+
+        function displayProducts(products) {
+            const grid = document.getElementById('product-grid');
+
+            grid.innerHTML = products.map((product, index) => {
+                const exclPrice = getExclPrice(product.price);
+                const inclPrice = getInclPrice(product.price);
+
+                return `
+                    <div class="product-card">
+                        <div class="product-number">${index + 1}</div>
+                        <div class="product-image-container">
+                            <img src="${product.images[0] || 'placeholder.jpg'}"
+                                 alt="${product.title}"
+                                 class="product-image"
+                                 onclick="openLightbox('${product.images[0]}')"
+                                 onerror="this.src='https://via.placeholder.com/300x250?text=Geen+afbeelding'">
+                        </div>
+
+                        <div class="product-info">
+                            <div class="product-title">${product.title}</div>
+                            ${product.sku ? `<div class="product-sku">SKU: ${product.sku}</div>` : ''}
+                            ${product.dimensions ? `<div class="product-dimensions">📏 ${product.dimensions} cm</div>` : ''}
+                            ${product.description ? `<div class="product-description">${product.description.substring(0, 120)}${product.description.length > 120 ? '...' : ''}</div>` : ''}
+                            <div class="product-prices">
+                                <div class="product-price-excl">${formatPrice(exclPrice)} excl. BTW</div>
+                                <div class="product-price-incl">${formatPrice(inclPrice)} incl. BTW</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            document.getElementById('product-count').textContent = products.length;
+        }
+
+        function displayTotals(products) {
+            const container = document.getElementById('totaal-lines');
+
+            let totalExcl = 0;
+            let totalIncl = 0;
+
+            let lines = products.map((product, index) => {
+                const excl = getExclPrice(product.price);
+                const incl = getInclPrice(product.price);
+                totalExcl += excl;
+                totalIncl += incl;
+
+                const shortTitle = product.title.length > 45
+                    ? product.title.substring(0, 45) + '...'
+                    : product.title;
+
+                return `
+                    <div class="totaal-line subtotaal">
+                        <span class="label">${index + 1}. ${shortTitle}</span>
+                        <span class="amount">${formatPrice(excl)}</span>
+                    </div>
+                `;
+            }).join('');
+
+            const btwAmount = totalIncl - totalExcl;
+
+            lines += `
+                <div class="totaal-line btw">
+                    <span class="label">Subtotaal excl. BTW</span>
+                    <span class="amount">${formatPrice(totalExcl)}</span>
+                </div>
+                <div class="totaal-line btw">
+                    <span class="label">BTW 21%</span>
+                    <span class="amount">${formatPrice(btwAmount)}</span>
+                </div>
+                <div class="totaal-line totaal">
+                    <span class="label">Totaal incl. BTW</span>
+                    <span class="amount">${formatPrice(totalIncl)}</span>
+                </div>
+            `;
+
+            container.innerHTML = lines;
+        }
+
+        function openLightbox(imageSrc) {
+            document.getElementById('lightbox').style.display = 'flex';
+            document.getElementById('lightbox-img').src = imageSrc;
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox').style.display = 'none';
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeLightbox();
+            }
+        });
+    </script>
+</body>
+</html>
