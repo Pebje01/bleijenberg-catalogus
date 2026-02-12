@@ -623,9 +623,7 @@
 
             let lines = products.map((product, index) => {
                 const excl = getExclPrice(product.price);
-                const incl = getInclPrice(product.price);
                 totalExcl += excl;
-                totalIncl += incl;
 
                 const shortTitle = product.title.length > 45
                     ? product.title.substring(0, 45) + '...'
@@ -639,9 +637,21 @@
                 `;
             }).join('');
 
-            const btwAmount = totalIncl - totalExcl;
+            totalExcl += 300; // Transport
+            totalExcl -= 200; // Korting
+
+            const btwAmount = totalExcl * BTW_PERCENTAGE;
+            totalIncl = totalExcl + btwAmount;
 
             lines += `
+                <div class="totaal-line subtotaal">
+                    <span class="label">Transport levering aan adres</span>
+                    <span class="amount">${formatPrice(300)}</span>
+                </div>
+                <div class="totaal-line subtotaal">
+                    <span class="label">Korting op potten</span>
+                    <span class="amount">-${formatPrice(200)}</span>
+                </div>
                 <div class="totaal-line btw">
                     <span class="label">Subtotaal excl. BTW</span>
                     <span class="amount">${formatPrice(totalExcl)}</span>
@@ -654,6 +664,10 @@
                     <span class="label">Totaal incl. BTW</span>
                     <span class="amount">${formatPrice(totalIncl)}</span>
                 </div>
+                <div class="totaal-line btw" style="margin-top: 10px; font-style: italic;">
+                    <span class="label">Optioneel: Fontein uit showroom voorraad</span>
+                    <span class="amount">${formatPrice(425)} excl. BTW</span>
+                </div>
             `;
 
             container.innerHTML = lines;
@@ -664,13 +678,10 @@
             const tfoot = document.getElementById('copy-table-foot');
 
             let totalExcl = 0;
-            let totalIncl = 0;
 
-            tbody.innerHTML = products.map(product => {
+            let rows = products.map(product => {
                 const excl = getExclPrice(product.price);
-                const incl = getInclPrice(product.price);
                 totalExcl += excl;
-                totalIncl += incl;
 
                 return `<tr>
                     <td>${product.sku || '–'}</td>
@@ -680,12 +691,48 @@
                 </tr>`;
             }).join('');
 
-            const btwAmount = totalIncl - totalExcl;
+            // Transport
+            rows += `<tr>
+                <td></td>
+                <td>Transport levering aan adres</td>
+                <td></td>
+                <td class="price-col">${formatPrice(300)}</td>
+            </tr>`;
+            totalExcl += 300;
+
+            // Korting
+            rows += `<tr>
+                <td></td>
+                <td>Korting op potten</td>
+                <td></td>
+                <td class="price-col">-${formatPrice(200)}</td>
+            </tr>`;
+            totalExcl -= 200;
+
+            tbody.innerHTML = rows;
+
+            const btwAmount = totalExcl * BTW_PERCENTAGE;
+            const totalIncl = totalExcl + btwAmount;
 
             tfoot.innerHTML = `
                 <tr class="totaal-row">
                     <td colspan="3">Subtotaal excl. BTW</td>
                     <td class="price-col">${formatPrice(totalExcl)}</td>
+                </tr>
+                <tr>
+                    <td colspan="3">BTW 21%</td>
+                    <td class="price-col">${formatPrice(btwAmount)}</td>
+                </tr>
+                <tr class="totaal-row">
+                    <td colspan="3">Totaal incl. BTW</td>
+                    <td class="price-col">${formatPrice(totalIncl)}</td>
+                </tr>
+                <tr><td colspan="4" style="padding: 8px 0; border: none;"></td></tr>
+                <tr style="font-style: italic; color: #9B8B6F;">
+                    <td></td>
+                    <td>Optioneel: Fontein uit showroom voorraad</td>
+                    <td></td>
+                    <td class="price-col">${formatPrice(425)} excl. BTW</td>
                 </tr>
             `;
         }
