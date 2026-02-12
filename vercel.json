@@ -20,6 +20,14 @@
       "dest": "/catalogus_montung.html"
     },
     {
+      "src": "/selectie.html",
+      "dest": "/selectie.html"
+    },
+    {
+      "src": "/selectie",
+      "dest": "/selectie.html"
+    },
+    {
       "src": "/Afbeeldingen/(.*)",
       "dest": "/Afbeeldingen/$1"
     },
