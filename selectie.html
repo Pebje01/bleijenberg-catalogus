@@ -334,6 +334,97 @@
                 font-size: 20px;
             }
         }
+
+        /* Kopieerbare tabel */
+        .copy-section {
+            margin-top: 30px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(122, 80, 34, 0.15);
+            border-top: 4px solid #7A5022;
+            overflow: hidden;
+        }
+
+        .copy-header {
+            padding: 20px 30px;
+            background: #F5F0E8;
+            border-bottom: 1px solid #E8DCC4;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .copy-header h2 {
+            color: #000000;
+            font-size: 22px;
+        }
+
+        .copy-btn {
+            padding: 10px 20px;
+            background: #7A5022;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .copy-btn:hover {
+            background: #5D3C1A;
+        }
+
+        .copy-btn.copied {
+            background: #16a34a;
+        }
+
+        .copy-table-wrapper {
+            padding: 20px 30px;
+            overflow-x: auto;
+        }
+
+        .copy-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+
+        .copy-table th {
+            text-align: left;
+            padding: 10px 12px;
+            background: #F5F0E8;
+            color: #5D3C1A;
+            font-weight: 600;
+            border-bottom: 2px solid #D4C4A8;
+        }
+
+        .copy-table td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #F5F0E8;
+            color: #333;
+        }
+
+        .copy-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .copy-table .price-col {
+            text-align: right;
+            font-variant-numeric: tabular-nums;
+            white-space: nowrap;
+        }
+
+        .copy-table tfoot td {
+            font-weight: 700;
+            border-top: 2px solid #7A5022;
+            padding-top: 12px;
+        }
+
+        .copy-table tfoot .totaal-row td {
+            color: #7A5022;
+            font-size: 16px;
+        }
     </style>
 </head>
 <body>
@@ -355,6 +446,28 @@
                 <h2>Totaaloverzicht</h2>
             </div>
             <div class="totaal-lines" id="totaal-lines"></div>
+        </div>
+
+        <div class="copy-section">
+            <div class="copy-header">
+                <h2>Prijsoverzicht</h2>
+                <button class="copy-btn" onclick="copyTable()">Kopieer tabel</button>
+            </div>
+            <div class="copy-table-wrapper">
+                <table class="copy-table" id="copy-table">
+                    <thead>
+                        <tr>
+                            <th>SKU</th>
+                            <th>Product</th>
+                            <th>Afmetingen</th>
+                            <th class="price-col">Excl. BTW</th>
+                            <th class="price-col">Incl. BTW</th>
+                        </tr>
+                    </thead>
+                    <tbody id="copy-table-body"></tbody>
+                    <tfoot id="copy-table-foot"></tfoot>
+                </table>
+            </div>
         </div>
     </div>
 
@@ -465,6 +578,7 @@
         window.addEventListener('DOMContentLoaded', function() {
             displayProducts(productsData);
             displayTotals(productsData);
+            displayCopyTable(productsData);
         });
 
         function displayProducts(products) {
@@ -544,6 +658,67 @@
             `;
 
             container.innerHTML = lines;
+        }
+
+        function displayCopyTable(products) {
+            const tbody = document.getElementById('copy-table-body');
+            const tfoot = document.getElementById('copy-table-foot');
+
+            let totalExcl = 0;
+            let totalIncl = 0;
+
+            tbody.innerHTML = products.map(product => {
+                const excl = getExclPrice(product.price);
+                const incl = getInclPrice(product.price);
+                totalExcl += excl;
+                totalIncl += incl;
+
+                return `<tr>
+                    <td>${product.sku || '–'}</td>
+                    <td>${product.title}</td>
+                    <td>${product.dimensions || '–'}</td>
+                    <td class="price-col">${formatPrice(excl)}</td>
+                    <td class="price-col">${formatPrice(incl)}</td>
+                </tr>`;
+            }).join('');
+
+            const btwAmount = totalIncl - totalExcl;
+
+            tfoot.innerHTML = `
+                <tr>
+                    <td colspan="3">Subtotaal excl. BTW</td>
+                    <td class="price-col">${formatPrice(totalExcl)}</td>
+                    <td class="price-col"></td>
+                </tr>
+                <tr>
+                    <td colspan="3">BTW 21%</td>
+                    <td class="price-col">${formatPrice(btwAmount)}</td>
+                    <td class="price-col"></td>
+                </tr>
+                <tr class="totaal-row">
+                    <td colspan="3">Totaal incl. BTW</td>
+                    <td class="price-col"></td>
+                    <td class="price-col">${formatPrice(totalIncl)}</td>
+                </tr>
+            `;
+        }
+
+        function copyTable() {
+            const table = document.getElementById('copy-table');
+            const range = document.createRange();
+            range.selectNode(table);
+            window.getSelection().removeAllRanges();
+            window.getSelection().addRange(range);
+            document.execCommand('copy');
+            window.getSelection().removeAllRanges();
+
+            const btn = document.querySelector('.copy-btn');
+            btn.textContent = 'Gekopieerd!';
+            btn.classList.add('copied');
+            setTimeout(() => {
+                btn.textContent = 'Kopieer tabel';
+                btn.classList.remove('copied');
+            }, 2000);
         }
 
         function openLightbox(imageSrc) {
