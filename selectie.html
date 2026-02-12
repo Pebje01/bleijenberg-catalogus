@@ -461,7 +461,6 @@
                             <th>Product</th>
                             <th>Afmetingen</th>
                             <th class="price-col">Excl. BTW</th>
-                            <th class="price-col">Incl. BTW</th>
                         </tr>
                     </thead>
                     <tbody id="copy-table-body"></tbody>
@@ -549,7 +548,7 @@
             {
                 "title": "Natuurstenen ronde pot – Robuust model (43x73)",
                 "price": "€597.44",
-                "sku": "",
+                "sku": "LIP00002",
                 "dimensions": "43 x 73 x 73",
                 "description": "",
                 "images": [
@@ -678,27 +677,15 @@
                     <td>${product.title}</td>
                     <td>${product.dimensions || '–'}</td>
                     <td class="price-col">${formatPrice(excl)}</td>
-                    <td class="price-col">${formatPrice(incl)}</td>
                 </tr>`;
             }).join('');
 
             const btwAmount = totalIncl - totalExcl;
 
             tfoot.innerHTML = `
-                <tr>
+                <tr class="totaal-row">
                     <td colspan="3">Subtotaal excl. BTW</td>
                     <td class="price-col">${formatPrice(totalExcl)}</td>
-                    <td class="price-col"></td>
-                </tr>
-                <tr>
-                    <td colspan="3">BTW 21%</td>
-                    <td class="price-col">${formatPrice(btwAmount)}</td>
-                    <td class="price-col"></td>
-                </tr>
-                <tr class="totaal-row">
-                    <td colspan="3">Totaal incl. BTW</td>
-                    <td class="price-col"></td>
-                    <td class="price-col">${formatPrice(totalIncl)}</td>
                 </tr>
             `;
         }
