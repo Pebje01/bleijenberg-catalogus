@@ -435,7 +435,7 @@
 
             <div class="offerte-info">
                 <div class="offerte-info-item"><strong id="product-count">6</strong> producten</div>
-                <div class="offerte-info-item">Prijzen zijn <strong>excl. BTW</strong> (21%)</div>
+                <div class="offerte-info-item">Alle prijzen <strong>excl. BTW</strong></div>
             </div>
         </header>
 
@@ -585,7 +585,6 @@
 
             grid.innerHTML = products.map((product, index) => {
                 const exclPrice = getExclPrice(product.price);
-                const inclPrice = getInclPrice(product.price);
 
                 return `
                     <div class="product-card">
@@ -605,7 +604,6 @@
                             ${product.description ? `<div class="product-description">${product.description.substring(0, 120)}${product.description.length > 120 ? '...' : ''}</div>` : ''}
                             <div class="product-prices">
                                 <div class="product-price-excl">${formatPrice(exclPrice)} excl. BTW</div>
-                                <div class="product-price-incl">${formatPrice(inclPrice)} incl. BTW</div>
                             </div>
                         </div>
                     </div>
@@ -640,9 +638,6 @@
             totalExcl += 300; // Transport
             totalExcl -= 200; // Korting
 
-            const btwAmount = totalExcl * BTW_PERCENTAGE;
-            totalIncl = totalExcl + btwAmount;
-
             lines += `
                 <div class="totaal-line subtotaal">
                     <span class="label">Transport levering aan adres</span>
@@ -652,17 +647,9 @@
                     <span class="label">Korting op potten</span>
                     <span class="amount">-${formatPrice(200)}</span>
                 </div>
-                <div class="totaal-line btw">
-                    <span class="label">Subtotaal excl. BTW</span>
-                    <span class="amount">${formatPrice(totalExcl)}</span>
-                </div>
-                <div class="totaal-line btw">
-                    <span class="label">BTW 21%</span>
-                    <span class="amount">${formatPrice(btwAmount)}</span>
-                </div>
                 <div class="totaal-line totaal">
-                    <span class="label">Totaal incl. BTW</span>
-                    <span class="amount">${formatPrice(totalIncl)}</span>
+                    <span class="label">Totaal excl. BTW</span>
+                    <span class="amount">${formatPrice(totalExcl)}</span>
                 </div>
                 <div class="totaal-line btw" style="margin-top: 10px; font-style: italic;">
                     <span class="label">Optioneel: Fontein uit showroom voorraad</span>
@@ -711,28 +698,17 @@
 
             tbody.innerHTML = rows;
 
-            const btwAmount = totalExcl * BTW_PERCENTAGE;
-            const totalIncl = totalExcl + btwAmount;
-
             tfoot.innerHTML = `
                 <tr class="totaal-row">
-                    <td colspan="3">Subtotaal excl. BTW</td>
+                    <td colspan="3">Totaal excl. BTW</td>
                     <td class="price-col">${formatPrice(totalExcl)}</td>
-                </tr>
-                <tr>
-                    <td colspan="3">BTW 21%</td>
-                    <td class="price-col">${formatPrice(btwAmount)}</td>
-                </tr>
-                <tr class="totaal-row">
-                    <td colspan="3">Totaal incl. BTW</td>
-                    <td class="price-col">${formatPrice(totalIncl)}</td>
                 </tr>
                 <tr><td colspan="4" style="padding: 8px 0; border: none;"></td></tr>
                 <tr style="font-style: italic; color: #9B8B6F;">
                     <td></td>
                     <td>Optioneel: Fontein uit showroom voorraad</td>
                     <td></td>
-                    <td class="price-col">${formatPrice(425)} excl. BTW</td>
+                    <td class="price-col">${formatPrice(425)}</td>
                 </tr>
             `;
         }
