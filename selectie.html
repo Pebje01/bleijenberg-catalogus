@@ -641,11 +641,11 @@
                     <span class="label">Subtotaal potten</span>
                     <span class="amount">${formatPrice(totalExcl)}</span>
                 </div>
-                <div class="totaal-line subtotaal">
+                <div class="totaal-line subtotaal" style="color: #5D3C1A;">
                     <span class="label">Transport levering aan adres</span>
                     <span class="amount">${formatPrice(300)}</span>
                 </div>
-                <div class="totaal-line subtotaal">
+                <div class="totaal-line subtotaal" style="color: #166534;">
                     <span class="label">Extra korting op potten</span>
                     <span class="amount">-${formatPrice(209.88)}</span>
                 </div>
@@ -695,7 +695,7 @@
             </tr>`;
 
             // Transport
-            rows += `<tr>
+            rows += `<tr style="color: #5D3C1A;">
                 <td></td>
                 <td>Transport levering aan adres</td>
                 <td></td>
@@ -704,7 +704,7 @@
             totalExcl += 300;
 
             // Korting
-            rows += `<tr>
+            rows += `<tr style="color: #166534;">
                 <td></td>
                 <td>Extra korting op potten</td>
                 <td></td>
