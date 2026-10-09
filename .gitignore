@@ -21,3 +21,8 @@ __pycache__/
 # Temp files
 *.log
 *.tmp
+
+# Lokale tooling
+.claude/launch.json
+.claude/launch.json.bak
+.playwright-mcp/
