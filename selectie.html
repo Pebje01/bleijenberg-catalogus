@@ -3,13 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bleijenberg – Offerte</title>
+    <title>Bleijenberg – Offerte Vera Polman</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
@@ -22,10 +18,7 @@
         body::before {
             content: '';
             position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
+            top: 0; left: 0; right: 0; bottom: 0;
             background: url('Noise Seamless Vector Patterns copy.webp') repeat;
             background-size: 100px 100px;
             opacity: 0.5;
@@ -49,11 +42,7 @@
             border-top: 4px solid #7A5022;
         }
 
-        h1 {
-            color: #000000;
-            font-size: 32px;
-            margin-bottom: 5px;
-        }
+        h1 { color: #000000; font-size: 32px; margin-bottom: 5px; }
 
         .offerte-subtitle {
             color: #9B8B6F;
@@ -76,9 +65,7 @@
             color: #333333;
         }
 
-        .offerte-info-item strong {
-            color: #000000;
-        }
+        .offerte-info-item strong { color: #000000; }
 
         .product-grid {
             display: grid;
@@ -104,12 +91,10 @@
 
         .product-number {
             position: absolute;
-            top: 12px;
-            left: 12px;
+            top: 12px; left: 12px;
             background: rgba(122, 80, 34, 0.9);
             color: white;
-            width: 32px;
-            height: 32px;
+            width: 32px; height: 32px;
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -134,9 +119,7 @@
             background: #F5F0E8;
         }
 
-        .product-info {
-            padding: 20px;
-        }
+        .product-info { padding: 20px; }
 
         .product-title {
             font-size: 18px;
@@ -219,14 +202,9 @@
             border-bottom: 1px solid #E8DCC4;
         }
 
-        .totaal-header h2 {
-            color: #000000;
-            font-size: 22px;
-        }
+        .totaal-header h2 { color: #000000; font-size: 22px; }
 
-        .totaal-lines {
-            padding: 20px 30px;
-        }
+        .totaal-lines { padding: 20px 30px; }
 
         .totaal-line {
             display: flex;
@@ -238,18 +216,9 @@
             color: #333;
         }
 
-        .totaal-line:last-child {
-            border-bottom: none;
-        }
-
-        .totaal-line.subtotaal {
-            font-weight: 500;
-        }
-
-        .totaal-line.btw {
-            color: #9B8B6F;
-            font-size: 15px;
-        }
+        .totaal-line:last-child { border-bottom: none; }
+        .totaal-line.subtotaal { font-weight: 500; }
+        .totaal-line.btw { color: #9B8B6F; font-size: 15px; }
 
         .totaal-line.totaal {
             border-top: 2px solid #7A5022;
@@ -260,14 +229,8 @@
             color: #000;
         }
 
-        .totaal-line .label {
-            flex: 1;
-        }
-
-        .totaal-line .amount {
-            text-align: right;
-            font-variant-numeric: tabular-nums;
-        }
+        .totaal-line .label { flex: 1; }
+        .totaal-line .amount { text-align: right; font-variant-numeric: tabular-nums; }
 
         .totaal-line.totaal .amount {
             color: #7A5022;
@@ -278,10 +241,7 @@
         #lightbox {
             display: none;
             position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
+            top: 0; left: 0; right: 0; bottom: 0;
             background: rgba(93, 60, 26, 0.95);
             z-index: 2000;
             justify-content: center;
@@ -297,14 +257,12 @@
 
         #lightbox .close {
             position: absolute;
-            top: 30px;
-            right: 30px;
+            top: 30px; right: 30px;
             color: white;
             font-size: 40px;
             cursor: pointer;
             background: rgba(122, 80, 34, 0.8);
-            width: 50px;
-            height: 50px;
+            width: 50px; height: 50px;
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -312,27 +270,13 @@
             transition: background 0.2s;
         }
 
-        #lightbox .close:hover {
-            background: rgba(122, 80, 34, 1);
-        }
+        #lightbox .close:hover { background: rgba(122, 80, 34, 1); }
 
         @media (max-width: 768px) {
-            .product-grid {
-                grid-template-columns: 1fr;
-            }
-
-            h1 {
-                font-size: 24px;
-            }
-
-            .offerte-info {
-                flex-direction: column;
-                gap: 8px;
-            }
-
-            .totaal-line.totaal .amount {
-                font-size: 20px;
-            }
+            .product-grid { grid-template-columns: 1fr; }
+            h1 { font-size: 24px; }
+            .offerte-info { flex-direction: column; gap: 8px; }
+            .totaal-line.totaal .amount { font-size: 20px; }
         }
 
         /* Kopieerbare tabel */
@@ -354,10 +298,7 @@
             align-items: center;
         }
 
-        .copy-header h2 {
-            color: #000000;
-            font-size: 22px;
-        }
+        .copy-header h2 { color: #000000; font-size: 22px; }
 
         .copy-btn {
             padding: 10px 20px;
@@ -371,13 +312,8 @@
             transition: background 0.2s;
         }
 
-        .copy-btn:hover {
-            background: #5D3C1A;
-        }
-
-        .copy-btn.copied {
-            background: #16a34a;
-        }
+        .copy-btn:hover { background: #5D3C1A; }
+        .copy-btn.copied { background: #16a34a; }
 
         .copy-table-wrapper {
             padding: 20px 30px;
@@ -406,9 +342,7 @@
             color: #333;
         }
 
-        .copy-table tr:last-child td {
-            border-bottom: none;
-        }
+        .copy-table tr:last-child td { border-bottom: none; }
 
         .copy-table .price-col {
             text-align: right;
@@ -431,12 +365,12 @@
 <body>
     <div id="catalogus">
         <header>
-            <h1>Offerte</h1>
+            <h1>Offerte – Vera Polman</h1>
             <p class="offerte-subtitle">Bleijenberg – Natuurstenen potten & troggen</p>
 
             <div class="offerte-info">
-                <div class="offerte-info-item"><strong id="product-count">6</strong> producten</div>
-                <div class="offerte-info-item">Alle prijzen <strong>excl. BTW</strong></div>
+                <div class="offerte-info-item"><strong>1</strong> product</div>
+                <div class="offerte-info-item">Prijzen <strong>incl. &amp; excl. BTW</strong></div>
             </div>
         </header>
 
@@ -458,10 +392,8 @@
                 <table class="copy-table" id="copy-table">
                     <thead>
                         <tr>
-                            <th>SKU</th>
-                            <th>Product</th>
-                            <th>Afmetingen</th>
-                            <th class="price-col">Excl. BTW</th>
+                            <th>Artikel</th>
+                            <th class="price-col">Prijs</th>
                         </tr>
                     </thead>
                     <tbody id="copy-table-body"></tbody>
@@ -478,255 +410,159 @@
     </div>
 
     <script>
-        const BTW_PERCENTAGE = 0.21;
-
+        // Product uit catalogus
         const productsData = [
             {
-                "title": "Jumbo natuurstenen pot beige rond (47×85)",
-                "price": "€749.00",
-                "sku": "LIP00010",
-                "dimensions": "47×85",
-                "description": "Jumbo natuurstenen pot beige rond (47×85)",
+                "title": "Natuurstenen pot beige groot – Rond (50×60)",
+                "price": 499.00,
+                "sku": "LIP00017",
+                "dimensions": "50 x 60 x 60",
+                "description": "Mooie ronde schuin aflopende lichtbeige pot, met dikke randen voor een robuuste uitstraling. Deze pot is meer schoongemaakt voor een esthetische lichtere look, maar heeft nog steeds een lichte patina waardoor het zijn karakter behoudt.",
                 "images": [
-                    "https://bleijenberg.eu/wp-content/uploads/2025/03/LIP00010-04.jpg",
-                    "https://bleijenberg.eu/wp-content/uploads/2025/03/LIP00010-02.jpg",
-                    "https://bleijenberg.eu/wp-content/uploads/2025/03/LIP00010-03.jpg",
-                    "https://bleijenberg.eu/wp-content/uploads/2025/03/LIP00010-01.jpg",
-                    "https://bleijenberg.eu/wp-content/uploads/2025/03/LIP00010-05.jpg"
+                    "https://bleijenberg.eu/wp-content/uploads/2025/02/Untitled-4-2.png",
+                    "https://bleijenberg.eu/wp-content/uploads/2025/02/potten-27.jpg",
+                    "https://bleijenberg.eu/wp-content/uploads/2025/02/potten-28.jpg"
                 ],
-                "url": "https://bleijenberg.eu/product/jumbo-natuurstenen-pot-beige-rond-47x85/"
-            },
-            {
-                "title": "Natuurstenen plantenpot beige/grijs – Rond (40 x Ø58)",
-                "price": "€459.00",
-                "sku": "LIP00019",
-                "dimensions": "40 x 58 x 58",
-                "description": "Natuurstenen ronde pot voor zowel binnen als buiten. Deze pot heeft een beige en grijze kleur, met een vrij egale afwerking.",
-                "images": [
-                    "https://bleijenberg.eu/wp-content/uploads/2024/09/Untitled-1.png",
-                    "https://bleijenberg.eu/wp-content/uploads/2025/02/potten-5_1.jpg",
-                    "https://bleijenberg.eu/wp-content/uploads/2025/02/potten-3_1.jpg",
-                    "https://bleijenberg.eu/wp-content/uploads/2025/02/Untitled-2.png"
-                ],
-                "url": "https://bleijenberg.eu/product/natuurstenen-large-vintage-plantenpot-beige-grijs-rond/"
-            },
-            {
-                "title": "Natuurstenen pot rond grijs – Rond (49 x 70)",
-                "price": "€599.00",
-                "sku": "LIT00013",
-                "dimensions": "49 x 70 x 70",
-                "description": "Natuurstenen ronde pot voor zowel binnen als buiten. De pot heeft een mooie dunne rand en een grijze kleur met subtiele mospatina.",
-                "images": [
-                    "https://bleijenberg.eu/wp-content/uploads/2025/02/Untitled-2-8.png",
-                    "https://bleijenberg.eu/wp-content/uploads/2025/02/potten-71-1.jpg"
-                ],
-                "url": "https://bleijenberg.eu/product/natuursteen-pot-rond-grijs/"
-            },
-            {
-                "title": "Natuurstenen grote pot – Beige – Rond (48×56)",
-                "price": "€499.00",
-                "sku": "LIP00015",
-                "dimensions": "48 x 56 x 56",
-                "description": "Mooie ronde schuin aflopende lichtbeige pot, met dikke randen voor een robuuste uitstraling.",
-                "images": [
-                    "https://bleijenberg.eu/wp-content/uploads/2025/02/Untitled-4-4.png"
-                ],
-                "url": "https://bleijenberg.eu/product/natuurstenen-grote-pot-beige-rond/"
-            },
-            {
-                "title": "Vintage natuursteen grote trog – Rechthoekig (30x77x49)",
-                "price": "€439.00",
-                "sku": "LIT00016",
-                "dimensions": "30 x 77 x 49",
-                "description": "Mooie rechthoekige vintage trog met een lichte warme beige kleur. Het oppervlakte heeft een mooi ruw relief, van dik kalksteen.",
-                "images": [
-                    "https://bleijenberg.eu/wp-content/uploads/2025/02/Untitled-4-5.png",
-                    "https://bleijenberg.eu/wp-content/uploads/2025/02/potten-54.jpg",
-                    "https://bleijenberg.eu/wp-content/uploads/2025/02/potten-52.jpg"
-                ],
-                "url": "https://bleijenberg.eu/product/pot-6/"
-            },
-            {
-                "title": "Natuurstenen ronde pot – Robuust model (43x73)",
-                "price": "€597.44",
-                "sku": "LIP00002",
-                "dimensions": "43 x 73 x 73",
-                "description": "",
-                "images": [
-                    "Afbeeldingen/LIP00002.png"
-                ],
-                "url": ""
+                "url": "https://bleijenberg.eu/product/natuurstenen-pot-beige-groot-rond/"
             }
         ];
 
-        function getExclPrice(priceString) {
-            const price = parseFloat(priceString.replace('€', '').replace(',', '.'));
-            if (isNaN(price)) return 0;
-            return (price * 0.8) / (1 + BTW_PERCENTAGE);
-        }
+        // Extra regels (incl. BTW)
+        const extraItems = [
+            { title: "Omzetten fontein (incl. materialen en arbeid)", priceIncl: 195.00 }
+        ];
 
-        function getInclPrice(priceString) {
-            const price = parseFloat(priceString.replace('€', '').replace(',', '.'));
-            if (isNaN(price)) return 0;
-            return price * 0.8;
-        }
+        // Transport
+        const transport = { title: "Bezorging", priceIncl: 75.00 };
 
-        function formatPrice(amount) {
-            return `€${amount.toFixed(2).replace('.', ',')}`;
-        }
+        const BTW = 0.21;
+
+        function toExcl(incl) { return incl / (1 + BTW); }
+        function fmt(n) { return '€ ' + n.toFixed(2).replace('.', ','); }
 
         window.addEventListener('DOMContentLoaded', function() {
-            displayProducts(productsData);
-            displayTotals(productsData);
-            displayCopyTable(productsData);
+            displayProducts();
+            displayTotals();
+            displayCopyTable();
         });
 
-        function displayProducts(products) {
+        function displayProducts() {
             const grid = document.getElementById('product-grid');
-
-            grid.innerHTML = products.map((product, index) => {
-                const exclPrice = getExclPrice(product.price);
-
+            grid.innerHTML = productsData.map((product, index) => {
+                const exclPrice = toExcl(product.price);
                 return `
                     <div class="product-card">
                         <div class="product-number">${index + 1}</div>
                         <div class="product-image-container">
-                            <img src="${product.images[0] || 'placeholder.jpg'}"
+                            <img src="${product.images[0]}"
                                  alt="${product.title}"
                                  class="product-image"
                                  onclick="openLightbox('${product.images[0]}')"
                                  onerror="this.src='https://via.placeholder.com/300x250?text=Geen+afbeelding'">
                         </div>
-
                         <div class="product-info">
                             <div class="product-title">${product.title}</div>
-                            ${product.sku ? `<div class="product-sku">SKU: ${product.sku}</div>` : ''}
-                            ${product.dimensions ? `<div class="product-dimensions">📏 ${product.dimensions} cm</div>` : ''}
-                            ${product.description ? `<div class="product-description">${product.description.substring(0, 120)}${product.description.length > 120 ? '...' : ''}</div>` : ''}
+                            <div class="product-sku">SKU: ${product.sku}</div>
+                            <div class="product-dimensions">Afmetingen (HxLxB): ${product.dimensions} cm</div>
+                            <div class="product-description">${product.description}</div>
+                            <a href="${product.url}" target="_blank" class="product-link">Bekijk op website →</a>
                             <div class="product-prices">
-                                <div class="product-price-excl">${formatPrice(exclPrice)} excl. BTW</div>
+                                <div class="product-price-excl">${fmt(exclPrice)} excl. BTW</div>
+                                <div class="product-price-incl">${fmt(product.price)} incl. BTW</div>
                             </div>
                         </div>
                     </div>
                 `;
             }).join('');
-
-            document.getElementById('product-count').textContent = products.length;
         }
 
-        function displayTotals(products) {
+        function displayTotals() {
             const container = document.getElementById('totaal-lines');
+            let subtotalIncl = 0;
 
-            let totalExcl = 0;
-            let totalIncl = 0;
-
-            let lines = products.map((product, index) => {
-                const excl = getExclPrice(product.price);
-                totalExcl += excl;
-
-                const shortTitle = product.title.length > 45
-                    ? product.title.substring(0, 45) + '...'
-                    : product.title;
-
-                return `
-                    <div class="totaal-line subtotaal">
-                        <span class="label">${index + 1}. ${shortTitle}</span>
-                        <span class="amount">${formatPrice(excl)}</span>
-                    </div>
-                `;
+            // Product(en)
+            let lines = productsData.map((p, i) => {
+                subtotalIncl += p.price;
+                return `<div class="totaal-line subtotaal">
+                    <span class="label">${p.sku}</span>
+                    <span class="amount">${fmt(toExcl(p.price))}</span>
+                </div>`;
             }).join('');
 
-            lines += `
-                <div class="totaal-line btw">
-                    <span class="label">Subtotaal potten</span>
-                    <span class="amount">${formatPrice(totalExcl)}</span>
-                </div>
-                <div class="totaal-line subtotaal" style="color: #5D3C1A;">
-                    <span class="label">Transport levering aan adres</span>
-                    <span class="amount">${formatPrice(300)}</span>
-                </div>
-                <div class="totaal-line subtotaal" style="color: #166534;">
-                    <span class="label">Extra korting op potten</span>
-                    <span class="amount">-${formatPrice(209.88)}</span>
-                </div>
-            `;
+            // Extra items
+            extraItems.forEach(item => {
+                subtotalIncl += item.priceIncl;
+                lines += `<div class="totaal-line subtotaal">
+                    <span class="label">${item.title}</span>
+                    <span class="amount">${fmt(toExcl(item.priceIncl))}</span>
+                </div>`;
+            });
 
-            totalExcl += 300; // Transport
-            totalExcl -= 209.88; // Korting
+            // Subtotaal
+            lines += `<div class="totaal-line btw">
+                <span class="label">Subtotaal excl. BTW</span>
+                <span class="amount">${fmt(toExcl(subtotalIncl))}</span>
+            </div>`;
 
-            lines += `
-                <div class="totaal-line totaal">
-                    <span class="label">Totaal excl. BTW</span>
-                    <span class="amount">${formatPrice(totalExcl)}</span>
-                </div>
-                <div class="totaal-line btw" style="margin-top: 10px; font-style: italic;">
-                    <span class="label">Optioneel: Fontein uit showroom voorraad</span>
-                    <span class="amount">${formatPrice(425)} excl. BTW</span>
-                </div>
-            `;
+            // Transport
+            subtotalIncl += transport.priceIncl;
+            lines += `<div class="totaal-line subtotaal" style="color: #5D3C1A;">
+                <span class="label">${transport.title}</span>
+                <span class="amount">${fmt(toExcl(transport.priceIncl))}</span>
+            </div>`;
+
+            // Totaal
+            lines += `<div class="totaal-line totaal">
+                <span class="label">Totaal excl. BTW</span>
+                <span class="amount">${fmt(toExcl(subtotalIncl))}</span>
+            </div>`;
 
             container.innerHTML = lines;
         }
 
-        function displayCopyTable(products) {
+        function displayCopyTable() {
             const tbody = document.getElementById('copy-table-body');
             const tfoot = document.getElementById('copy-table-foot');
 
-            let totalExcl = 0;
+            let subtotalIncl = 0;
 
-            let rows = products.map(product => {
-                const excl = getExclPrice(product.price);
-                totalExcl += excl;
-
+            // Product(en)
+            let rows = productsData.map(p => {
+                subtotalIncl += p.price;
                 return `<tr>
-                    <td>${product.sku || '–'}</td>
-                    <td>${product.title}</td>
-                    <td>${product.dimensions || '–'}</td>
-                    <td class="price-col">${formatPrice(excl)}</td>
+                    <td>${p.sku}</td>
+                    <td class="price-col">${fmt(p.price)}</td>
                 </tr>`;
             }).join('');
 
-            // Subtotaal potten
-            rows += `<tr style="font-weight: 600; border-top: 1px solid #D4C4A8;">
-                <td></td>
-                <td>Subtotaal potten</td>
-                <td></td>
-                <td class="price-col">${formatPrice(totalExcl)}</td>
+            // Extra items
+            extraItems.forEach(item => {
+                subtotalIncl += item.priceIncl;
+                rows += `<tr>
+                    <td>${item.title}</td>
+                    <td class="price-col">${fmt(item.priceIncl)}</td>
+                </tr>`;
+            });
+
+            // Bezorging
+            subtotalIncl += transport.priceIncl;
+            rows += `<tr>
+                <td>${transport.title}</td>
+                <td class="price-col">${fmt(transport.priceIncl)}</td>
             </tr>`;
 
-            // Transport
-            rows += `<tr style="color: #5D3C1A;">
-                <td></td>
-                <td>Transport levering aan adres</td>
-                <td></td>
-                <td class="price-col">${formatPrice(300)}</td>
-            </tr>`;
-            totalExcl += 300;
-
-            // Korting
-            rows += `<tr style="color: #166534;">
-                <td></td>
-                <td>Extra korting op potten</td>
-                <td></td>
-                <td class="price-col">-${formatPrice(209.88)}</td>
-            </tr>`;
-            totalExcl -= 209.88;
+            const btwAmount = subtotalIncl - toExcl(subtotalIncl);
 
             tbody.innerHTML = rows;
 
-            tfoot.innerHTML = `
-                <tr class="totaal-row">
-                    <td colspan="3">Totaal excl. BTW</td>
-                    <td class="price-col">${formatPrice(totalExcl)}</td>
-                </tr>
-                <tr><td colspan="4" style="padding: 8px 0; border: none;"></td></tr>
-                <tr style="font-style: italic; color: #9B8B6F;">
-                    <td></td>
-                    <td>Optioneel: Fontein uit showroom voorraad</td>
-                    <td></td>
-                    <td class="price-col">${formatPrice(425)}</td>
-                </tr>
-            `;
+            tfoot.innerHTML = `<tr class="totaal-row">
+                <td>Totaal</td>
+                <td class="price-col">${fmt(subtotalIncl)}</td>
+            </tr>
+            <tr>
+                <td style="color: #9B8B6F; font-weight: 400; font-size: 13px;">Waarvan 21% BTW</td>
+                <td class="price-col" style="color: #9B8B6F; font-weight: 400; font-size: 13px;">${fmt(btwAmount)}</td>
+            </tr>`;
         }
 
         function copyTable() {
@@ -757,9 +593,7 @@
         }
 
         document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                closeLightbox();
-            }
+            if (e.key === 'Escape') closeLightbox();
         });
     </script>
 </body>
